@@ -4,19 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "valid_input.h"
 
 #define SIZE 10
 
 unsigned int *tos, *p1;
 unsigned int *stack = NULL;
-typedef struct ValidateInput {
-  char message[100];
-  int code;
-} TValidateInputReturn;
 
 int errStackOverflow = 0;
 int errEmptyStack = 0;
-TValidateInputReturn validInput = {"Entrada válida", 200};
+TValidateInputReturn validInput;
 int printPop = 0;
 
 /** Prototipos das Funções */
@@ -58,20 +55,18 @@ int main(void) {
     printf("Digite um número: ");
     scanf("%s", input);
 
-    validInput = validate_input(input);
-
-    if (validInput.code == 200) {
-
-      value = strtol(input, &p, 10);
-
-      if (toupper(input[0]) == 'D') {
+    if (toupper(input[0]) == 'D') {
         popValue = pop();
         printPop = 1;
-      }
+        continue;
+    }
 
-      if (value >= 0 && strlen(p) == 0) {
-        push(value);
-      }
+    validInput = validate_input(input);
+
+    if (validInput.value != NULL) {
+
+      push(*validInput.value);
+
     }
 
   } while (toupper(input[0]) != 'E');
@@ -123,7 +118,7 @@ void print_exception(void) {
     errEmptyStack = 0;
     printPop = 0;
   }
-  if (validInput.code != 200) {
+  if (validInput.value == NULL) {
     printf("%s!\n\n", validInput.message);
   }
 }
@@ -135,41 +130,3 @@ void print_pop(unsigned int popValue) {
   }
 }
 
-TValidateInputReturn validate_input(const char *input) {
-
-  if (input == NULL || *input == '\0') {
-    TValidateInputReturn return_validate = {"Valor informado é inválido", 400};
-    return return_validate;
-  }
-
-  if (strlen(input) == 1) {
-    if (toupper(input[0]) == 'D' || toupper(input[0]) == 'E') {
-      TValidateInputReturn return_validate = {"Entrada válida", 200};
-      return return_validate;
-    }
-  }
-
-  char *ptr = NULL;
-  ptr = (char *)input;
-  while (*ptr) { // Enquanto o caractere atual não for o terminador nulo
-    if ((ptr == input) && (*ptr == '-' || *ptr == '+')) {
-      ptr++; // Move para o próximo caractere
-    }
-    if (!isdigit(*ptr)) {
-      TValidateInputReturn return_validate = {"Entrada inválida", 400};
-      return return_validate; // Se o caractere não for um dígito, retorna falso
-    }
-    ptr++; // Move para o próximo caractere
-  }
-
-  long value = strtol(input, NULL, 10);
-  if (value < 0 || value > UINT_MAX) {
-    TValidateInputReturn result;
-    snprintf(result.message, sizeof(result.message), "Fora do intervalo : 0 a %u", UINT_MAX);
-    result.code = 400;
-    return result;
-  }
-
-  TValidateInputReturn return_validate = {"Entrada válida", 200};
-  return return_validate; // Entrada válida
-}

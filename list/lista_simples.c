@@ -12,9 +12,9 @@ typedef struct time {
   char nome[20];
   int pontos;
   struct time *next;
-} TTime;
+} TClube;
 
-TTime *lista = NULL;
+TClube *lista = NULL;
 
 void main() {
 
@@ -26,7 +26,8 @@ void main() {
   camp1.qtdeTimes = 0;
 
   do {
-    TTime *novoTime = (TTime *)malloc(sizeof(TTime));
+    
+    TClube *novoTime = (TClube *)malloc(sizeof(TClube));
     printf("Informe o nome do time: ");
     scanf("%s", novoTime->nome);
     printf("Informe os pontos: ");
@@ -39,11 +40,12 @@ void main() {
       printf("Primeiro Item");
       lista = novoTime;
     } else {
+
       lista->next = novoTime;
     }
     // lista = novoTime;
 
-    TTime *aux = lista;
+    TClube *aux = lista;
     while (aux) {
       printf("%s->%d Pontos\n", aux->nome, aux->pontos);
       aux = aux->next;
@@ -56,7 +58,7 @@ void main() {
   printf("%s %d - %d times\n", camp1.nome, camp1.ano, camp1.qtdeTimes);
 
   printf("Tabela %p\n", lista);
-  TTime *aux = lista;
+  TClube *aux = lista;
   while (aux) {
     printf("%s->%d Pontos\n", aux->nome, aux->pontos);
     aux = aux->next;
