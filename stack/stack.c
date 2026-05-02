@@ -1,35 +1,32 @@
+#include "valid_input.h"
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "valid_input.h"
 
 #define SIZE 10
 
-unsigned int *tos, *p1;
-unsigned int *stack = NULL;
+unsigned int *stack, *pss, *tos, *dequeueValue;
 
 int errStackOverflow = 0;
 int errEmptyStack = 0;
-TValidateInputReturn validInput;
-int printPop = 0;
+int printPopValue = 0;
+
+TValidateInput validInput;
 
 /** Prototipos das Funções */
 void push(unsigned int n);
-unsigned int pop(void);
+unsigned int *pop(void);
 void print_stack(void);
-void print_exception(void);
-void print_pop(unsigned int popValue);
-TValidateInputReturn validate_input(const char *input);
+void print_stack_exception(void);
+void print_validate_exception(void);
+void print_pop(unsigned int *popValue);
 
 int main(void) {
 
-  unsigned int value = 0;
-  char *p = NULL, input[50];
-  int opc = 0;
-  unsigned int popValue = 0;
+  char input[50];
 
   /*stack aponta para o primeiro elemento da pilha*/
   stack = (unsigned int *)malloc(SIZE * sizeof(unsigned int));
@@ -38,38 +35,40 @@ int main(void) {
     return 1;
   }
 
-  tos = stack;    /* tos aponta para o início da pilha */
-  p1 = stack - 1; /* p1 aponta para o topo da pilha (vazia: antes do início) */
+  pss = stack;     /* pss = ponteiro para o início da pilha */
+  tos = stack - 1; /* tos = ponteiro para o topo da pilha */
 
-  do {
+  while (1) {
 
     system("clear");
-    printf("*** Pilha de %d elementos: Push e Pop *** \n", SIZE);
-    printf("( D ) Retira um valor(Pop)\n");
-    printf("( E ) Sair\n\n");
+    printf("*** PILHA de %d elementos: Insert e Retrive *** \n", SIZE);
+    printf("( P ) Retira um valor(Pop)\n");
+    printf("( X ) Sair\n\n");
 
-    print_exception();
-    print_pop(popValue);
+    print_stack_exception();
+    print_validate_exception();
+    print_pop(dequeueValue);
     print_stack();
 
     printf("Digite um número: ");
     scanf("%s", input);
 
-    if (toupper(input[0]) == 'D') {
-        popValue = pop();
-        printPop = 1;
+    if (strlen(input) == 1) {
+      char command = toupper(input[0]);
+      if (command == 'P') {
+        dequeueValue = pop();
         continue;
+      }
+      if (command == 'X') {
+        break; // Sair do loop
+      }
     }
 
     validInput = validate_input(input);
-
-    if (validInput.value != NULL) {
-
-      push(*validInput.value);
-
+    if (validInput.isValid) {
+      push(validInput.value);
     }
-
-  } while (toupper(input[0]) != 'E');
+  }
 
   printf("Fim do programa\n");
 
@@ -79,36 +78,39 @@ int main(void) {
 }
 
 void push(unsigned int n) {
-  if (p1 - tos + 1 >= SIZE) {
+  if (tos - pss + 1 >= SIZE) {
     errStackOverflow = 1; // Estouro de pilha
     return;
   }
-  p1++;
-  *p1 = n;
+  tos++;
+  *tos = n;
 }
 
-unsigned int pop(void) {
-  if (p1 < tos) {
+unsigned int *pop(void) {
+  if (tos < pss) {
     errEmptyStack = 1; // Pilha vazia
     return 0;
   }
-  unsigned int val = *p1;
-  p1--;
-  return val;
+  unsigned int *value = tos; // Armazena o valor a ser retornado
+  tos--;
+  printPopValue = 1;
+  return value;
 }
 
 void print_stack(void) {
+  printf("tos->%p\n", tos);
+  printf("pss->%p\n", pss);
   printf("|%-2s|%-10s|%-20s|\n", "#", "Valor", "Ponteiro");
   printf("-----------------------------------\n");
   unsigned int *i;
-  int idx = 0;
-  for (i = p1; i >= tos; i--) {
-    printf("|%2d|%10u|%20p|\n", ++idx, *i, i);
+  unsigned int idx = (tos - pss) + 1; // Índice para exibição, começando do topo
+  for (i = tos; i >= pss; i--) {
+    printf("|%2d|%10u|%20p|\n", idx--, *i, i);
   }
   printf("\n\n");
 }
 
-void print_exception(void) {
+void print_stack_exception(void) {
   if (errStackOverflow) {
     printf("Estouro de Pilha!\n\n");
     errStackOverflow = 0;
@@ -116,17 +118,18 @@ void print_exception(void) {
   if (errEmptyStack) {
     printf("Pilha vazia!\n\n");
     errEmptyStack = 0;
-    printPop = 0;
-  }
-  if (validInput.value == NULL) {
-    printf("%s!\n\n", validInput.message);
   }
 }
 
-void print_pop(unsigned int popValue) {
-  if (printPop) {
-    printf("Retirado: %u->%p\n\n", popValue, (p1 + 1));
-    printPop = 0;
+void print_pop(unsigned int *popValue) {
+  if (printPopValue) { // Verifica se popValue é o valor que foi retirado
+    printf("Retirado: %u->%p\n\n", *popValue, popValue);
+	printPopValue = 0; // Reseta a flag para evitar mensagens repetidas
   }
 }
 
+void print_validate_exception(void) {
+  if (validInput.isValid == 0 && validInput.message[0] != '\0') {
+	printf("%s\n\n", validInput.message);
+  }
+}

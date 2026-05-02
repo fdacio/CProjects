@@ -3,11 +3,11 @@
 
 typedef struct ValidateInput {
   char message[100];
-  long *value;
-} TValidateInputReturn;
+  int isValid;
+  long value;
+} TValidateInput;
 
-
-TValidateInputReturn validate_input(const char *input);
+TValidateInput validate_input(const char *input);
 
 #endif
 
