@@ -7,6 +7,7 @@
 static int id = 0;
 
 // Função para adicionar um item no final em uma lista singularmente encadeada
+// Parametro **list -> passagem por referencia, para refletir modificação na variável global da lista
 void add_end_sing_linked(TClub *new_club, TClub **list) {
   if (!*list) {
     *list = new_club;
@@ -20,6 +21,7 @@ void add_end_sing_linked(TClub *new_club, TClub **list) {
 }
 
 // Função para adicionar um item no final em uma lista duplamente encadeada
+// Parametro **list -> passagem por referencia, para refletir modificação na variável global da lista
 void add_end_dup_linked(TClub *new_club, TClub **list) {
   // se a lista estiver vazia, adiciona o primeiro e sai
   if (!*list) {
@@ -115,12 +117,12 @@ void sort_list(TClub *list) {
 }
 
 // Imprime uma tabela de clubes no console
-void print_list(TClub *list) {
+void print_list(const TClub *list) {
   if (!list) {
     return;
   }
 
-  TClub *aux = list;
+  const TClub *aux = list;
 
   printf("Pointer Table -> %p\n", (void *)aux);
 
@@ -144,9 +146,9 @@ void print_list(TClub *list) {
 }
 
 // Imprime uma tabela de ponteiros de itens no console
-void print_list_pointer(TClub *list) {
+void print_list_pointer(const TClub *list) {
 
-  TClub *aux = list;
+  const TClub *aux = list;
 
   printf("Pointer Table -> %p\n", (void *)aux);
 
@@ -171,12 +173,12 @@ void print_list_pointer(TClub *list) {
 
 // Imprime uma nova lista classificada por pontos decrescente
 // Isso para poder manter a orignal
-void print_sorted_list(TClub *list) {
+void print_sorted_list(const TClub *list) {
   if (!list) {
     return;
   }
   TClub *sorted_list = NULL;
-  TClub *aux = list;
+  const TClub *aux = list;
   while (aux) {
     TClub *new_club = get_new_club(aux->id, aux->nome, aux->pontos);
     add_sorted_sing_linked(new_club, &sorted_list);
@@ -187,7 +189,7 @@ void print_sorted_list(TClub *list) {
 }
 
 // Retorna um ponteiro para o item encontado por ID
-TClub *find_item(int id, TClub *list) {
+TClub *find_item(const int id, TClub *list) {
   TClub *aux = list;
   while (aux) {
     if (aux->id == id) {
@@ -211,7 +213,7 @@ TClub *find_item_by_name(const char *nome, TClub *list) {
 }
 
 // Imprime um item no console
-void print_item(TClub *club) {
+void print_item(const TClub *club) {
   if (!club)
     return;
   printf("ID......: %d\n", club->id);
@@ -220,7 +222,7 @@ void print_item(TClub *club) {
 }
 
 // Imprime os ponteiros do item no console
-void print_item_pointer(TClub *club) {
+void print_item_pointer(const TClub *club) {
   if (!club) {
     printf("nil");
     return;
