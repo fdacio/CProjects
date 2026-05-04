@@ -6,59 +6,78 @@
 #include <unistd.h>
 
 void clear_screen(void);
+void print_menu(void);
+void add_club(void);
+
+TClub *list = NULL;
 
 int main(void) {
 
-  char op[10];
-  TClub *list = NULL;
+  char op;
 
   do {
 
-    char nome[20];
-    int pontos;
-
     clear_screen();
-    print_list(list);
+    print_menu();
 
-    printf("Informe o clube: ");
-
-    fgets(nome, sizeof(nome), stdin);
-    nome[strcspn(nome, "\n")] = '\0';
-
-    printf("Informe os pontos: ");
-    scanf("%d", &pontos);
+    scanf("%c", &op);
     getchar();
 
-    TClub *new_club = (TClub *)malloc(sizeof(TClub));
-
-    if (!new_club) {
-      printf("Erro de memória");
-      return 1;
+    if (op == '1') {
+      add_club();
+    }
+    if (op == '2') {
+      print_list(list);
+      getchar();
+    }
+    if (op == '3') {
+      print_sorted_list(list);
+      getchar();
     }
 
-    strcpy(new_club->nome, nome);
-    new_club->pontos = pontos;
-    new_club->next = NULL;
+  } while (op != '0');
 
-    add_sorted(new_club, &list);
-
-    // TClub *s_list = get_sorted_list(list);
-    // print_list(s_list);
-
-    printf("0 - Sair\n1 - Continuar\n> ");
-    fgets(op, sizeof(op), stdin);
-
-    if (op[0] == '0') {
-      printf("Saindo...\n");
-    } else if (op[0] == '1') {
-      printf("Continuando...\n");
-    }
-
-  } while (op[0] != '0');
-
-  free(list);
+  free_list(list);
 
   return 0;
+}
+
+void print_menu(void) {
+
+  char menu[][30] = {
+    "1 - Adicionar Club", 
+    "2 - Exibir Tabela",
+    "3 - Exibir Tabela Ordenada", 
+    "0 - Sair"
+  };
+
+  char (*m)[30] = menu; // ponteiro para array de 20 chars
+  char (*menu_end)[30] = menu + (sizeof(menu) / sizeof(menu[0]));
+
+  while (m < menu_end) {
+    printf("%s\n", *m);
+    m++;
+  }
+  printf(">");
+}
+
+void add_club(void) {
+
+  char nome[25];
+  int pontos;
+
+  printf("Informe o clube: ");
+
+  fgets(nome, sizeof(nome), stdin);
+  nome[strcspn(nome, "\n")] = '\0';
+
+  printf("Informe os pontos: ");
+  scanf("%d", &pontos);
+  getchar();
+
+  TClub *new_club = get_new_club(get_next_id(), nome, pontos);
+
+  add_end(new_club, &list);
 }
 
 void clear_screen(void) {
