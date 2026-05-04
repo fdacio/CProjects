@@ -4,7 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-void add_end(TClub *new_club, TClub **list) {
+static int id = 0;
+
+// Função para adicionar um item no final em uma lista singularmente encadeada
+void add_end_sing_linkend(TClub *new_club, TClub **list) {
   if (!*list) {
     *list = new_club;
     return;
@@ -16,27 +19,28 @@ void add_end(TClub *new_club, TClub **list) {
   item->next = new_club;
 }
 
+// Função para adicionar um item no final em uma lista duplamente encadeada
 void add_end_dup_linked(TClub *new_club, TClub **list) {
   // se a lista estiver vazia, adiciona o primeiro e sai
   if (!*list) {
     *list = new_club;
     return;
   }
-  // se a lista não estiver vazia, pecorre até o último
+  // se a lista não estiver vazia, percorre até o último
   TClub *item = *list;
-  TClub *prev = NULL;
   while (item->next) {
     item = item->next;
   }
-  // nesse ponto, o ponteiro de item, aponta para o ultimo elemento da lista
-  // ness ponto, o ponteiro anterior do novo item aponto para o ultimo item da
-  // lista
 
+  // nesse ponto, o ponteiro de item, aponta para o ultimo elemento da lista
+  // nesse ponto, o ponteiro anterior do novo item aponto para o ultimo item da
+  // lista
   new_club->prev = item;
   item->next = new_club;
 }
 
-void add_start(TClub *new_club, TClub **list) {
+// Função para adicionar um item no inicio em uma lista singlamente encadeada
+void add_start_sing_linkend(TClub *new_club, TClub **list) {
   if (!*list) {
     *list = new_club;
     return;
@@ -45,7 +49,8 @@ void add_start(TClub *new_club, TClub **list) {
   *list = new_club;
 }
 
-void add_sorted(TClub *new_club, TClub **list) {
+// Função para adicionar um item ordenado em uma lista singlamente encadeada
+void add_sorted_sing_linkend(TClub *new_club, TClub **list) {
   TClub *p = *list;
   TClub *old = NULL;
 
@@ -63,15 +68,24 @@ void add_sorted(TClub *new_club, TClub **list) {
   }
 }
 
+// Função para troca de posição de dois itens na lista singlamente/duplamente encadeada
 void swap_item(TClub *_target, TClub *_source) {
+  // Salva ponteiros originais
+  TClub *target_next = _target->next;
+  TClub *target_prev = _target->prev;
+  TClub *source_next = _source->next;
+  TClub *source_prev = _source->prev;
 
-  TClub temp = *_source;
-  *_source = *_target;
-  *_target = temp;
+  // Troca tudo via cópia de struct
+  TClub temp = *_target;
+  *_target  = *_source;
+  *_source  = temp;
 
-  TClub *tempNext = _target->next;
-  _target->next = _source->next;
-  _source->next = tempNext;
+  // Restaura os ponteiros — posição na lista não muda, só os dados
+  _target->next = target_next;
+  _target->prev = target_prev;
+  _source->next = source_next;
+  _source->prev = source_prev;
 }
 
 void sort_list(TClub *list) {
@@ -132,9 +146,8 @@ void print_list_pointer(TClub *list) {
 
   printf("Pointer Table -> %p\n", (void *)aux);
 
-  printf("|%-25s|%-15s|%-15s|%-15s|%-5s|\n", "Clube", "Prev", "Current", "Next",
-         "Bytes");
-  for (int i = 0; i < 90; i++)
+  printf("|%-25s|%-15s|%-15s|%-15s|\n", "Clube", "Prev", "Current", "Next");
+  for (int i = 0; i < 85; i++)
     printf("-");
   printf("\n");
 
@@ -146,11 +159,7 @@ void print_list_pointer(TClub *list) {
 
     printf("%15p|", (void *)aux);
 
-    printf("%15p|", (void *)aux->next);
-
-    uintptr_t diff = (aux->next) ? (uintptr_t)aux->next - (uintptr_t)aux : 0;
-
-    printf("%15ld|\n", diff);
+    printf("%15p|\n", (void *)aux->next);
 
     aux = aux->next;
   }
@@ -164,7 +173,7 @@ void print_sorted_list(TClub *list) {
   TClub *aux = list;
   while (aux) {
     TClub *new_club = get_new_club(aux->id, aux->nome, aux->pontos);
-    add_sorted(new_club, &sorted_list);
+    add_sorted_sing_linkend(new_club, &sorted_list);
     aux = aux->next;
   }
   print_list(sorted_list);
@@ -182,7 +191,7 @@ TClub *find_item(int id, TClub *list) {
   return NULL;
 }
 
-TClub *find_item_by_name(char *nome, TClub *list) {
+TClub *find_item_by_name(const char *nome, TClub *list) {
   TClub *aux = list;
   while (aux) {
     if (strcmp(aux->nome, nome) == 0) {
@@ -218,27 +227,27 @@ void remove_item(int id, TClub **list) {
   TClub *_prev = NULL;
   while (_current) {
     if (_current->id == id) {
-      // varifica se o item procurado é o primero da lista;
+      // verifica se o item  é o primeiro da lista;
       //_prev ainda não aponta para nenhum item
       if (_prev == NULL) {
         // remover o primeiro
         *list = _current->next;
       } else {
-        // nesse ponto o _prev já aponto para o item anterior ao encontro do id
+        // nesse ponto o _prev já aponta para o item anterior ao encontro do id
         _prev->next = _current->next;
       }
       free(_current);
       return;
     }
     // Se o item atual(_current) não for o que está procurando, ele será o
-    // anterior ao item prucrado
+    // anterior ao item procurado
     _prev = _current;
     _current = _current->next;
   }
 }
 
 void remove_item_dup_linked(TClub *_remove, TClub **list) {
-  
+
   if (!*list)
     return;
 
@@ -251,7 +260,8 @@ void remove_item_dup_linked(TClub *_remove, TClub **list) {
   // remove o primeiro
   if (_remove->prev == NULL) {
     *list = _remove->next;
-    _next->prev = NULL;
+    if (_next)
+      _next->prev = NULL;
     free(_remove);
     return;
   }
@@ -271,26 +281,25 @@ void free_list(TClub *list) {
   TClub *_free = NULL;
   while (aux) {
     _free = aux;
-    // printf("free->%p\n",_free);
-    // printf("content before ->%s\n",_free->nome);
-    free(_free);
-    // printf("content after->%s\n",_free->nome);
     aux = aux->next;
+    free(_free);
   }
 }
 
+//Gera o próximo ID utilizando um variável estática global
 int get_next_id() { return ++id; }
 
-TClub *get_new_club(int id, char *nome, int pontos) {
+TClub *get_new_club(int _id, const char *nome, int pontos) {
   TClub *new_club = (TClub *)malloc(sizeof(TClub));
   if (!new_club) {
     printf("Erro de memória");
     return NULL;
   }
-  strcpy(new_club->nome, nome);
+  strncpy(new_club->nome, nome, sizeof(new_club->nome) - 1);
+  new_club->nome[sizeof(new_club->nome) - 1] = '\0';
   new_club->pontos = pontos;
   new_club->next = NULL;
   new_club->prev = NULL;
-  new_club->id = id;
+  new_club->id = _id;
   return new_club;
 }
