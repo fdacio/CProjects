@@ -42,7 +42,7 @@ int main(void) {
     add_end_dup_linked(new_club, &list);
     c++;
   }
-  print_list_pointer(list);
+  print_list(list);
   printf("\n\n");
 
   //TClub *_find = find_item(6, list);
@@ -52,11 +52,13 @@ int main(void) {
 
   remove_item_dup_linked(1, &list);
 
-  remove_item_dup_linked(20, &list);
+  remove_item_dup_linked(10, &list);
 
   remove_item_dup_linked(20, &list);
 
-  print_list_pointer(list);
+  remove_item_dup_linked(20, &list);
+
+  print_list(list);
 
   // TClub *aux = list;
   // while (aux) {

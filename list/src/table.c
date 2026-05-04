@@ -240,14 +240,12 @@ void remove_item_dup_linked(int id, TClub **list) {
 
   TClub *_prev = _remove->prev;
   TClub *_next = _remove->next;
-  if (_prev) {
-    _prev->next = _next;
+
+  if (_prev == NULL) {
+    *list = _next;
   } else {
-    *list = NULL;
+    _prev->next = _next;
   }
-  printf("prev-> %p\n", _prev);
-  printf("prev-> %p\n", _remove);
-  printf("next-> %p\n", _next);
 
   free(_remove);
 }
