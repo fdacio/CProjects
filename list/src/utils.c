@@ -138,6 +138,7 @@ void sanitize_string(char *str) {
   }
 }
 
+/* Convert uma string para todos o caracteres minúsculos */
 void to_lower_case(char *str) {
   while (*str) {
     *str = tolower(*str);

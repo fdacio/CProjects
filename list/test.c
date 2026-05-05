@@ -157,8 +157,11 @@ void test_find_item() {
   TClub *club2 = find_item(4, list);
   TEST("Procura por ID 4 - Não existe e retorna NULL", (club2 == NULL));
 
-  free_list(list);
+  TClub *empty_list = NULL;
+  TClub *club3 = find_item(1, empty_list);
+  TEST("Procura em uma lista vazia - Retorna NULL", (club3 == NULL));
 
+  free_list(list);
 }
 
 void test_find_by_name() {
@@ -191,6 +194,10 @@ void test_find_by_name() {
   TEST("Procura por nome São Paulo(acentuação) - Existe",
        strcmp(club3->nome, "São Paulo") == 0);
 
+  TClub *empty_list = NULL;
+  TClub *club4 = find_item_by_name("Vasco da Gama2", empty_list);
+  TEST("Procura em uma lista vazia - Retorna NULL", (club4 == NULL));
+  
   free_list(list);
 }
 

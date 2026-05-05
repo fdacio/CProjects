@@ -1,8 +1,8 @@
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 
-long fatorial(int n);
+unsigned long long fatorial(unsigned int n);
 // 8 -> 8 * 7 * 6 ..... * 1
 /**
 argc - arguments count
@@ -29,26 +29,21 @@ int main(int argc, char *argv[]) {
     printf("Parâmetro deve ser um número inteiro não negativo\n");
     return 1;
   }
-  if (n == 0 || n == 1) {
-    printf("Fatorial(%d)=1\n", n);
-    return 0;
-  }
-  if (n > 20) {
-    printf("Parâmetro máximo: 20\n");
-    return 1;
-  }
 
-  long r = fatorial(n);
-  printf("Fatorial(%d)=%ld\n", n, r);
+  printf("Fatorial(%d)=%llu\n", n, fatorial(n));
   return 0;
 }
 
-long fatorial(int n) {
+unsigned long long fatorial(unsigned int n) {
+
+  if (n > 20) {
+    printf("Erro: valor máximo é 20!\n");
+    exit(1);
+  }
 
   if ((n == 0) || (n == 1)) {
     return 1;
   }
 
-  long r = n * fatorial(n - 1);
-  return r;
+  return n * fatorial(n - 1);
 }
