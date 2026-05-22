@@ -209,7 +209,7 @@ int main() {
   test_free_list();
 
   printf("\n=============================\n");
-  printf("        FIM DOS TESTES       \n");
+  printf("     FIM DOS TESTES - list.c   \n");
   printf("=============================\n");
 
   return 0;

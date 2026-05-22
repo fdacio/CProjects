@@ -36,7 +36,7 @@ TItemStack* new_item_stack(const char *name) {
   TItemStack *new_item = (TItemStack *)malloc(sizeof(TItemStack));
 
   if (!new_item) {
-    printf("Erro de alocação de memória");
+    perror("malloc failed");
     return NULL;
   }
 

@@ -8,24 +8,24 @@ static int id = 0;
 
 // Função para adicionar um item no final em uma lista singularmente encadeada
 // Parametro **list -> passagem por referencia, para refletir modificação na variável global da lista
-void add_end_sing_linked(TItemList *new_club, TItemList **list) {
+void add_end_sing_linked(TItemList *new_item, TItemList **list) {
   if (!*list) {
-    *list = new_club;
+    *list = new_item;
     return;
   }
   TItemList *item = *list;
   while (item->next) {
     item = item->next;
   }
-  item->next = new_club;
+  item->next = new_item;
 }
 
 // Função para adicionar um item no final em uma lista duplamente encadeada
 // Parametro **list -> passagem por referencia, para refletir modificação na variável global da lista
-void add_end_dup_linked(TItemList *new_club, TItemList **list) {
+void add_end_dup_linked(TItemList *new_item, TItemList **list) {
   // se a lista estiver vazia, adiciona o primeiro e sai
   if (!*list) {
-    *list = new_club;
+    *list = new_item;
     return;
   }
   // se a lista não estiver vazia, percorre até o último
@@ -35,37 +35,37 @@ void add_end_dup_linked(TItemList *new_club, TItemList **list) {
   }
 
   // nesse ponto, o ponteiro anterior do novo item aponto para o ultimo item da lista
-  new_club->prev = item;
+  new_item->prev = item;
   // nesse ponto, o ultimo elemento da lista aponta para o novo elemento
-  item->next = new_club;
+  item->next = new_item;
 }
 
 // Função para adicionar um item no inicio em uma lista singlamente encadeada
-void add_start_sing_linked(TItemList *new_club, TItemList **list) {
+void add_start_sing_linked(TItemList *new_item, TItemList **list) {
   if (!*list) {
-    *list = new_club;
+    *list = new_item;
     return;
   }
-  new_club->next = *list;
-  *list = new_club;
+  new_item->next = *list;
+  *list = new_item;
 }
 
 // Função para adicionar um item ordenado em uma lista singlamente encadeada
-void add_sorted_sing_linked(TItemList *new_club, TItemList **list) {
+void add_sorted_sing_linked(TItemList *new_item, TItemList **list) {
   TItemList *p = *list;
   TItemList *old = NULL;
 
-  while (p && new_club->pontos <= p->pontos) {
+  while (p && new_item->pontos <= p->pontos) {
     old = p;
     p = p->next;
   }
 
   if (old == NULL) {
-    new_club->next = *list;
-    *list = new_club;
+    new_item->next = *list;
+    *list = new_item;
   } else {
-    new_club->next = p;
-    old->next = new_club;
+    new_item->next = p;
+    old->next = new_item;
   }
 }
 
@@ -90,7 +90,7 @@ void swap_item(TItemList *_target, TItemList *_source) {
   _source->prev = source_prev;
 }
 
-// Ordena uma lista de clubes por pontos decrescente
+// Ordena uma lista de itens por pontos decrescente
 void sort_list(TItemList *list) {
   if (!list) {
     return;
@@ -235,17 +235,19 @@ int get_next_id() { return ++id; }
 // Retorna um ponteiro para um item de lista alocado
 TItemList *new_item_list(int _id, const char *nome, int pontos) {
   
-  TItemList *new_club = (TItemList *)malloc(sizeof(TItemList));
+  TItemList *new_item = (TItemList *)malloc(sizeof(TItemList));
   
-  if (!new_club) {
-    printf("Erro de alocação de memória");
+  if (!new_item) {
+    perror("malloc failed");
     return NULL;
   }
-  strncpy(new_club->nome, nome, sizeof(new_club->nome) - 1);
-  new_club->nome[sizeof(new_club->nome) - 1] = '\0';
-  new_club->pontos = pontos;
-  new_club->next = NULL;
-  new_club->prev = NULL;
-  new_club->id = _id;
-  return new_club;
+
+  strncpy(new_item->nome, nome, sizeof(new_item->nome) - 1);
+  new_item->nome[sizeof(new_item->nome) - 1] = '\0';
+  new_item->pontos = pontos;
+  new_item->next = NULL;
+  new_item->prev = NULL;
+  new_item->id = _id;
+  return new_item;
+
 }

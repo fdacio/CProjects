@@ -25,7 +25,7 @@ void test_new_item() {
 }  
 
 void test_enqueue() {
-  printf("***** test enqueue (Max: %u) *****\n", 4);
+  printf("\n--- test enqueue (Max: %u) ---\n", 4);
 
   TItemQueue *iniQueue = NULL;
   TItemQueue *endQueue = NULL;
@@ -67,7 +67,7 @@ void test_enqueue() {
 }
 
 void test_dequeue() {
-  printf("***** test denqueue ****\n");
+  printf("\n----- test dequeue -----\n");
 
   TItemQueue *iniQueue = NULL;
   TItemQueue *endQueue = NULL;
@@ -152,7 +152,7 @@ int main(void) {
   test_free_queue();
 
   printf("\n===========================\n");
-  printf("        FIM DOS TESTES       \n");
+  printf("    FIM DOS TESTES - queue.c \n");
   printf("=============================\n");
 
   return 0;

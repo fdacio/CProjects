@@ -9,10 +9,10 @@ typedef struct item_list {
   struct item_list *next;
 } TItemList;
 
-void add_end_dup_linked(TItemList *new_club, TItemList **list);
-void add_end_sing_linked(TItemList *new_club, TItemList **list);
-void add_start_sing_linked(TItemList *new_club, TItemList **list);
-void add_sorted_sing_linked(TItemList *new_club, TItemList **list);
+void add_end_dup_linked(TItemList *new_item, TItemList **list);
+void add_end_sing_linked(TItemList *new_item, TItemList **list);
+void add_start_sing_linked(TItemList *new_item, TItemList **list);
+void add_sorted_sing_linked(TItemList *new_item, TItemList **list);
 void swap_item(TItemList *target, TItemList *source);
 void sort_list(TItemList *list);
 TItemList *find_item(const int id, TItemList *list);

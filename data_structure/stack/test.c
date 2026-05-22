@@ -16,12 +16,11 @@
       printf("❌ FALHOU: %s\n", nome);                                         \
   } while (0)
 
-
+  
 void test_new_item() {
   printf("\n--- new_item ---\n");
-
-  TItemStack *item = new_item_stack("Soma");
-  int _b = (strcmp(item->name, "Soma") == 0) && (item->prev == NULL);
+  TItemStack *item = new_item_stack("12345678901234567890");
+  int _b = (strcmp(item->name, "1234567890123456789") == 0) && (item->prev == NULL);
   TEST("New Item", _b);
 }
 
@@ -135,15 +134,13 @@ void test_free_stack() {
   push(i1, &topStack1);
   push(i2, &topStack1);
   push(i3, &topStack1);
-  print_stack(topStack1);
   free_stack(topStack1);
   TEST("free stack com 3 itens sem crash", 1); // se chegou aqui, não crashou
 
   // caso 2: stack com vários itens
   TItemStack *topStack2 = NULL;
-  TItemStack *i4 = new_item_stack("Soma");
+  TItemStack *i4 = new_item_stack("Divisao");
   push(i4, &topStack2);
-  print_stack(topStack2);
   free_stack(topStack2);
   TEST("free stack com 1 item sem crash", 1); // se chegou aqui, não crashou
 
@@ -167,7 +164,7 @@ int main(void) {
   test_free_stack();
 
   printf("\n===========================\n");
-  printf("        FIM DOS TESTES       \n");
+  printf("  FIM DOS TESTES - stack.c   \n");
   printf("=============================\n");
   return 0;
 }

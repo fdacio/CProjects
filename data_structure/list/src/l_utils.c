@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Imprime uma tabela de clubes no console
+// Imprime uma tabela de itemes no console
 void print_list(const TItemList *list) {
   if (!list) {
     return;
@@ -68,8 +68,8 @@ void print_sorted_list(const TItemList *list) {
   TItemList *sorted_list = NULL;
   const TItemList *aux = list;
   while (aux) {
-    TItemList *new_club = new_item_list(aux->id, aux->nome, aux->pontos);
-    add_sorted_sing_linked(new_club, &sorted_list);
+    TItemList *new_item = new_item_list(aux->id, aux->nome, aux->pontos);
+    add_sorted_sing_linked(new_item, &sorted_list);
     aux = aux->next;
   }
   print_list(sorted_list);
@@ -77,23 +77,23 @@ void print_sorted_list(const TItemList *list) {
 }
 
 // Imprime um item no console
-void print_item(const TItemList *club) {
-  if (!club)
+void print_item(const TItemList *item) {
+  if (!item)
     return;
-  printf("ID......: %d\n", club->id);
-  printf("Nome....: %s\n", club->nome);
-  printf("Pontos..: %d\n", club->pontos);
+  printf("ID......: %d\n", item->id);
+  printf("Nome....: %s\n", item->nome);
+  printf("Pontos..: %d\n", item->pontos);
   printf("\n");
 }
 
 // Imprime os ponteiros do item no console
-void print_item_pointer(const TItemList *club) {
-  if (!club) {
+void print_item_pointer(const TItemList *item) {
+  if (!item) {
     printf("nil");
     return;
   }
-  printf("ID......: %d\n", club->id);
-  printf("Prev....: %p\n", club->prev);
-  printf("Next....: %p\n", club->next);
+  printf("ID......: %d\n", item->id);
+  printf("Prev....: %p\n", item->prev);
+  printf("Next....: %p\n", item->next);
   printf("\n");
 }

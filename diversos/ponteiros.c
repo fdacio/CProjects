@@ -69,5 +69,6 @@ int main()
         printf("\n");
 
     } while (strcmp(text, "done"));
+    
 }
 

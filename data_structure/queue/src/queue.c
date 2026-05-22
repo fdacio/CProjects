@@ -9,7 +9,8 @@ const unsigned int MAX = 4;
 TItemQueue *cpy_first_item(TItemQueue *iniQueue);
 void swap_item_queue(TItemQueue *_dest, TItemQueue *_src);
 
-void enqueue(TItemQueue *new_item, TItemQueue **iniQueue, TItemQueue **endQueue) {
+void enqueue(TItemQueue *new_item, TItemQueue **iniQueue,
+             TItemQueue **endQueue) {
 
   if (!(*iniQueue)) {
     new_item->count = 1;
@@ -72,7 +73,7 @@ TItemQueue *new_item_queue(const char *name) {
   TItemQueue *new_item = (TItemQueue *)malloc(sizeof(TItemQueue));
 
   if (!new_item) {
-    printf("Erro de alocação de memória");
+    perror("malloc failed");
     return NULL;
   }
 
@@ -96,13 +97,13 @@ void free_queue(TItemQueue *iniQueue) {
 }
 
 TItemQueue *cpy_first_item(TItemQueue *iniQueue) {
-  
-//  TItemQueue *first_item = iniQueue;
+
+  //  TItemQueue *first_item = iniQueue;
 
   TItemQueue *first_item = malloc(sizeof(TItemQueue));
 
   if (!first_item)
-      return NULL;
+    return NULL;
 
   // salva os dados do primeiro elemento
   memcpy(first_item, iniQueue, sizeof(TItemQueue));
