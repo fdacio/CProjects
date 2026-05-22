@@ -152,9 +152,9 @@ void test_free_stack() {
 }
 
 int main(void) {
-  printf("=============================\n");
-  printf("     TESTES - stack.c        \n");
-  printf("=============================\n");
+  printf("\n=============================\n");
+  printf("TESTES - stack.c");
+  printf("\n=============================\n");
 
   test_new_item();
   test_push();
@@ -164,7 +164,7 @@ int main(void) {
   test_free_stack();
 
   printf("\n===========================\n");
-  printf("  FIM DOS TESTES - stack.c   \n");
-  printf("=============================\n");
+  printf("FIM DOS TESTES - stack.c");
+  printf("\n===========================\n\n");
   return 0;
 }

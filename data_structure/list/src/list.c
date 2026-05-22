@@ -55,7 +55,7 @@ void add_sorted_sing_linked(TItemList *new_item, TItemList **list) {
   TItemList *p = *list;
   TItemList *old = NULL;
 
-  while (p && new_item->pontos <= p->pontos) {
+  while (p && new_item->data->pontos <= p->data->pontos) {
     old = p;
     p = p->next;
   }
@@ -101,7 +101,7 @@ void sort_list(TItemList *list) {
     TItemList *next = current->next;
 
     while (next) {
-      if (next->pontos > max_current->pontos) {
+      if (next->data->pontos > max_current->data->pontos) {
         max_current = next;
       }
       next = next->next;
@@ -119,7 +119,7 @@ void sort_list(TItemList *list) {
 TItemList *find_item(const int id, TItemList *list) {
   TItemList *aux = list;
   while (aux) {
-    if (aux->id == id) {
+    if (aux->data->id == id) {
       return aux;
     }
     aux = aux->next;
@@ -131,7 +131,7 @@ TItemList *find_item(const int id, TItemList *list) {
 TItemList *find_item_by_name(const char *nome, TItemList *list) {
   TItemList *aux = list;
   while (aux) {
-    if (strcmp(aux->nome, nome) == 0) {
+    if (strcmp(aux->data->nome, nome) == 0) {
       return aux;
     }
     aux = aux->next;
@@ -146,7 +146,7 @@ void remove_item_sing_linked(int id, TItemList **list) {
   TItemList *_current = *list;
   TItemList *_prev = NULL;
   while (_current) {
-    if (_current->id == id) {
+    if (_current->data->id == id) {
       // Nesse ponto o item a ser removido para a ser o _current
       //  verifica se o item  é o primeiro da lista;
       //_prev ainda não aponta para nenhum item
@@ -225,6 +225,7 @@ void free_list(TItemList *list) {
   while (aux) {
     _free = aux;
     aux = aux->next;
+    free(_free->data); // libera a memória do clube
     free(_free);
   }
 }
@@ -236,18 +237,26 @@ int get_next_id() { return ++id; }
 TItemList *new_item_list(int _id, const char *nome, int pontos) {
   
   TItemList *new_item = (TItemList *)malloc(sizeof(TItemList));
+  TClub *new_club = (TClub *)malloc(sizeof(TClub));
+
+  if (!new_club) {
+    perror("malloc failed");
+    return NULL; 
+  } 
   
   if (!new_item) {
     perror("malloc failed");
     return NULL;
   }
 
-  strncpy(new_item->nome, nome, sizeof(new_item->nome) - 1);
-  new_item->nome[sizeof(new_item->nome) - 1] = '\0';
-  new_item->pontos = pontos;
+  new_club->id = _id;
+  strncpy(new_club->nome, nome, sizeof(new_club->nome) - 1);
+  new_club->nome[sizeof(new_club->nome) - 1] = '\0';
+  new_club->pontos = pontos;
+
+  new_item->data = new_club;
   new_item->next = NULL;
   new_item->prev = NULL;
-  new_item->id = _id;
   return new_item;
 
 }

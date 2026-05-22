@@ -1,10 +1,14 @@
 #ifndef LIST_H
 #define LIST_H
 
-typedef struct item_list {
+typedef struct club {
   int id;
   char nome[25];
-  int pontos;
+  unsigned int pontos;
+} TClub;
+
+typedef struct item_list {
+  TClub *data; 
   struct item_list *prev;
   struct item_list *next;
 } TItemList;

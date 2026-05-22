@@ -142,9 +142,9 @@ void test_free_queue() {
 }
 
 int main(void) {
-  printf("=============================\n");
-  printf("     TESTES - queue.c        \n");
-  printf("=============================\n");
+  printf("\n=============================\n");
+  printf("TESTES - queue.c");
+  printf("\n=============================\n");
 
   test_new_item();
   test_enqueue();
@@ -152,8 +152,8 @@ int main(void) {
   test_free_queue();
 
   printf("\n===========================\n");
-  printf("    FIM DOS TESTES - queue.c \n");
-  printf("=============================\n");
+  printf("FIM DOS TESTES - queue.c");
+  printf("\n===========================\n\n");
 
   return 0;
 }

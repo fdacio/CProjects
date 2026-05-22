@@ -21,11 +21,11 @@ void print_list(const TItemList *list) {
 
     printf("|%2d|", pos++);
 
-    printf("%4d|", aux->id);
+    printf("%4d|", aux->data->id);
 
-    printf("%-25s|", aux->nome);
+    printf("%-25s|", aux->data->nome);
 
-    printf("%10d|\n", aux->pontos);
+    printf("%10d|\n", aux->data->pontos);
 
     aux = aux->next;
   }
@@ -46,7 +46,7 @@ void print_list_pointer(const TItemList *list) {
 
   while (aux) {
 
-    printf("|%-25s|", aux->nome);
+    printf("|%-25s|", aux->data->nome);
 
     printf("%15p|", (void *)aux->prev);
 
@@ -68,7 +68,7 @@ void print_sorted_list(const TItemList *list) {
   TItemList *sorted_list = NULL;
   const TItemList *aux = list;
   while (aux) {
-    TItemList *new_item = new_item_list(aux->id, aux->nome, aux->pontos);
+    TItemList *new_item = new_item_list(aux->data->id, aux->data->nome, aux->data->pontos);
     add_sorted_sing_linked(new_item, &sorted_list);
     aux = aux->next;
   }
@@ -80,9 +80,9 @@ void print_sorted_list(const TItemList *list) {
 void print_item(const TItemList *item) {
   if (!item)
     return;
-  printf("ID......: %d\n", item->id);
-  printf("Nome....: %s\n", item->nome);
-  printf("Pontos..: %d\n", item->pontos);
+  printf("ID......: %d\n", item->data->id);
+  printf("Nome....: %s\n", item->data->nome);
+  printf("Pontos..: %d\n", item->data->pontos);
   printf("\n");
 }
 
@@ -92,7 +92,7 @@ void print_item_pointer(const TItemList *item) {
     printf("nil");
     return;
   }
-  printf("ID......: %d\n", item->id);
+  printf("ID......: %d\n", item->data->id);
   printf("Prev....: %p\n", item->prev);
   printf("Next....: %p\n", item->next);
   printf("\n");

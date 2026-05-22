@@ -1,8 +1,9 @@
 /* Testes para as funções de lista */
-/*** Compile and build: gcc test.c src/list.c src/l_utils.c -Iinclude -o build/test  ****/
+/*** Compile and build: gcc test.c src/list.c src/l_utils.c -Iinclude -o
+ * build/test  ****/
 /*** Execute: ./build/test ****/
-#include "list.h"
 #include "l_utils.h"
+#include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,9 +22,9 @@ void test_new_item() {
 
   TItemList *item = new_item_list(1, "Vasco da Gama", 10);
 
-  TEST("id correto", item->id == 1);
-  TEST("nome correto", strcmp(item->nome, "Vasco da Gama") == 0);
-  TEST("pontos corretos", item->pontos == 10);
+  TEST("id correto", item->data->id == 1);
+  TEST("nome correto", strcmp(item->data->nome, "Vasco da Gama") == 0);
+  TEST("pontos corretos", item->data->pontos == 10);
   TEST("next é NULL", item->next == NULL);
   TEST("prev é NULL", item->prev == NULL);
 
@@ -40,15 +41,15 @@ void test_add_end_sing_linked() {
 
   add_end_sing_linked(a, &list);
   TEST("primeiro elemento é Vasco da Gama",
-       strcmp(list->nome, "Vasco da Gama") == 0);
+       strcmp(list->data->nome, "Vasco da Gama") == 0);
 
   add_end_sing_linked(b, &list);
   TEST("segundo elemento é Palmeiras",
-       strcmp(list->next->nome, "Palmeiras") == 0);
+       strcmp(list->next->data->nome, "Palmeiras") == 0);
 
   add_end_sing_linked(c, &list);
   TEST("terceiro elemento é São Paulo",
-       strcmp(list->next->next->nome, "São Paulo") == 0);
+       strcmp(list->next->next->data->nome, "São Paulo") == 0);
   TEST("terceiro next é NULL", list->next->next->next == NULL);
 
   print_list(list);
@@ -89,7 +90,7 @@ void test_remove_item_sing_linked() {
 
   // remove o primeiro
   remove_item_sing_linked(1, &list);
-  TEST("novo primeiro é São Paulo", strcmp(list->nome, "São Paulo") == 0);
+  TEST("novo primeiro é São Paulo", strcmp(list->data->nome, "São Paulo") == 0);
 
   // remove o último (lista fica vazia)
   remove_item_sing_linked(3, &list);
@@ -106,11 +107,12 @@ void test_sort_list() {
 
   sort_list(list);
 
-  TEST("1º lugar: Palmeiras (30pts)", strcmp(list->nome, "Palmeiras") == 0);
+  TEST("1º lugar: Palmeiras (30pts)",
+       strcmp(list->data->nome, "Palmeiras") == 0);
   TEST("2º lugar: São Paulo (20pts)",
-       strcmp(list->next->nome, "São Paulo") == 0);
+       strcmp(list->next->data->nome, "São Paulo") == 0);
   TEST("3º lugar: Vasco da Gama  (10pts)",
-       strcmp(list->next->next->nome, "Vasco da Gama") == 0);
+       strcmp(list->next->next->data->nome, "Vasco da Gama") == 0);
 
   free_list(list);
 }
@@ -124,7 +126,8 @@ void test_free_list() {
   add_end_sing_linked(new_item_list(2, "Palmeiras", 20), &list);
   add_end_sing_linked(new_item_list(3, "São Paulo", 15), &list);
   free_list(list);
-  TEST("lista com 3 elementos liberada sem crash", 1); // se chegou aqui, não crashou
+  TEST("lista com 3 elementos liberada sem crash",
+       1); // se chegou aqui, não crashou
 
   // caso 2: lista com um elemento
   TItemList *list2 = NULL;
@@ -149,7 +152,7 @@ void test_find_item() {
 
   // caso 1 - procura por iteme de ID 1
   TItemList *item1 = find_item(1, list);
-  TEST("Procura por ID 1 Vasco da Gama - Existe", item1->id == 1);
+  TEST("Procura por ID 1 Vasco da Gama - Existe", item1->data->id == 1);
 
   // caso 2 - procura por iteme de ID 4 - não existe na lista
   TItemList *item2 = find_item(4, list);
@@ -171,11 +174,10 @@ void test_find_by_name() {
 
   print_list(list);
 
-
   // caso 1 - procura por iteme de nome Vasco da Gama
   TItemList *item1 = find_item_by_name("Vasco da Gama", list);
   TEST("Procura por nome Vasco da Gama - Existe",
-       strcmp(item1->nome, "Vasco da Gama") == 0);
+       strcmp(item1->data->nome, "Vasco da Gama") == 0);
 
   // caso 2 - procura por iteme por nome Flamengo - não existe na lista
   TItemList *item2 = find_item_by_name("Flamengo", list);
@@ -185,19 +187,19 @@ void test_find_by_name() {
   // caso 3 - procura por iteme por nome São Paulo - acentuação
   TItemList *item3 = find_item_by_name("São Paulo", list);
   TEST("Procura por nome São Paulo(acentuação) - Existe",
-       strcmp(item3->nome, "São Paulo") == 0);
+       strcmp(item3->data->nome, "São Paulo") == 0);
 
   TItemList *empty_list = NULL;
   TItemList *item4 = find_item_by_name("Vasco da Gama2", empty_list);
   TEST("Procura em uma lista vazia - Retorna NULL", (item4 == NULL));
-  
+
   free_list(list);
 }
 
 int main() {
-  printf("=============================\n");
-  printf("     TESTES - list.c        \n");
-  printf("=============================\n");
+  printf("\n=============================\n");
+  printf("TESTES - list.c");
+  printf("\n=============================\n");
 
   test_new_item();
   test_add_end_sing_linked();
@@ -209,8 +211,8 @@ int main() {
   test_free_list();
 
   printf("\n=============================\n");
-  printf("     FIM DOS TESTES - list.c   \n");
-  printf("=============================\n");
+  printf("FIM DOS TESTES - list.c");
+  printf("\n=============================\n\n");
 
   return 0;
 }

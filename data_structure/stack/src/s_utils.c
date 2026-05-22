@@ -4,10 +4,10 @@
 
 void print_stack(TItemStack *topStack) {
   TItemStack *aux = topStack;
-  printf("%-20s | %2s | %16s | %16s\n", "Name", "Count", "Address", "Prev");
-  printf("-------------------------------------------------------------\n");
+  printf("%-20s | %6s | %16s | %16s\n", "Name", "Count", "Address", "Prev");
+  printf("-------------------------------------------------------------------\n");
   while (aux) {
-    printf("%-20s | %2d | %16p | %16p\n", aux->name, aux->count, aux, aux->prev);
+    printf("%-20s | %6d | %16p | %16p\n", aux->name, aux->count, aux, aux->prev);
     aux = aux->prev;
   }
 }
@@ -15,5 +15,5 @@ void print_stack(TItemStack *topStack) {
 void print_item(TItemStack *item) {
   if (!item)
     return;
-  printf("%-20s | %2d | %16p\n", item->name, item->count, item->prev);
+  printf("%-20s | %6d | %16p\n", item->name, item->count, item->prev);
 }
