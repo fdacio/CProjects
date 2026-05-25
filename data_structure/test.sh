@@ -6,7 +6,7 @@ APP="${1:-"all"}"
 
 validate_input() {
 
-    local valid_apps=("all" "list" "queue" "stack" )
+    local valid_apps=("all" "list" "queue" "stack", "tree" )
 
     # shellcheck disable=SC2076
     if [[ ! " ${valid_apps[*]} " =~ " $APP " ]]; then
@@ -28,6 +28,7 @@ build_module() {
         list)   dir="list";  image_name= ;;
         queue)  dir="queue"; image_name= ;;
         stack)  dir="stack"; image_name= ;;
+        tree)   dir="tree";  image_name= ;;
     esac
 
     # Verifica se o diretório existe
@@ -42,7 +43,7 @@ build_module() {
 }
 
 if [[ "$APP" == "all" ]]; then
-    for module in list queue stack; do
+    for module in list queue stack tree; do
         build_module "$module"
     done
 else
@@ -59,6 +60,7 @@ exec_module() {
         list)   dir="list" ;;
         queue)  dir="queue" ;;
         stack)  dir="stack" ;;
+        tree)   dir="tree" ;;
     esac
 
     echo "🚀 Executando testes para módulo: $module (dir: $dir)"
@@ -66,7 +68,7 @@ exec_module() {
 } 
 
 if [[ "$APP" == "all" ]]; then
-    for module in list queue stack; do
+    for module in list queue stack tree; do
         exec_module "$module"
     done
 else
