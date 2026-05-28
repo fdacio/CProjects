@@ -1,4 +1,5 @@
 #include "tree.h"
+#include "t_utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,9 +11,10 @@ int main() {
 
   TNode *root = NULL;
 
-  int data_values[] = {84, 3,  7,  9,  5,  6,  8,  1,  2,  0,  21, 93,
-                       12, 11, 10, 15, 14, 13, 20, 19, 18, 17, 16, 4};
-  int len = sizeof(data_values) / sizeof(data_values[0]);                     
+  int data_values[10];
+  randomize_array(data_values, 10);
+  int len = sizeof(data_values) / sizeof(data_values[0]);
+  printf("Valores: ");
   for (int i = 0; i < len; i++) {
     int data = data_values[i];
     printf("%d ", data);
@@ -32,19 +34,15 @@ int main() {
   post_order(root);
   printf("\n");
 
-  free_tree(root);
+  printf("Níveis: ");
+  print_tree(root, 2);
+  printf("\n");
 
-  TNode *_root = NULL;
 
-  for (int i = 0; i < 100000; i++) {
-    insert_node(&_root, i);
-  }
-
-  
   int search_values[] = {5, 15, 100};
   for (int i = 0; i < 3; i++) {
     int data = search_values[i];
-    TNode *result = search_node(_root, data);
+    TNode *result = search_node(root, data);
     if (result != NULL) { 
       printf("Valor %d encontrado na árvore.\n", data);
     } else {
@@ -52,8 +50,7 @@ int main() {
     }
   }
 
-  free_tree(_root);
-
+  free_tree(root);
 
   printf("\n=============================\n");
   printf("FIM DOS TESTES - tree.c");

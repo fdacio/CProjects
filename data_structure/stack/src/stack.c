@@ -1,6 +1,6 @@
 #include "stack.h"
-#include <stdio.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -10,11 +10,11 @@ void push(TItemStack *new_item, TItemStack **topStack) {
 
   if (!(*topStack)) {
     new_item->count = 1;
-    *topStack = new_item; //fist item
+    *topStack = new_item; // fist item
     return;
   }
-  if (((*topStack)->count + 1 ) > MAX) {
-    return;//stack overflow
+  if (((*topStack)->count + 1) > MAX) {
+    return; // stack overflow
   }
 
   new_item->count = (*topStack)->count + 1;
@@ -22,16 +22,16 @@ void push(TItemStack *new_item, TItemStack **topStack) {
   *topStack = new_item;
 }
 
-TItemStack* pop(TItemStack **topStack) {
-    if (!(*topStack)) {
-        return NULL;
-    }
-    TItemStack *i = *topStack;
-    *topStack = i->prev;
-    return i;
+TItemStack *pop(TItemStack **topStack) {
+  if (!(*topStack)) {
+    return NULL;
+  }
+  TItemStack *i = *topStack;
+  *topStack = i->prev;
+  return i;
 }
 
-TItemStack* new_item_stack(const char *name) {
+TItemStack *new_item_stack(const char *name) {
 
   TItemStack *new_item = (TItemStack *)malloc(sizeof(TItemStack));
 
