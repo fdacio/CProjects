@@ -27,7 +27,7 @@ int main() {
   TNode *root = NULL; 
   insert_node(&root, 10);
   TNode *node_10 = search_node(root, 10);
-  TEST("Teste de apená 1 nó: Nó 10 left NULL e right NULL", node_10 != NULL && node_10->data == 10 && node_10->left == NULL && node_10->right == NULL );
+  TEST("Teste de apenas 1 nó: Nó 10 left NULL e right NULL", node_10 != NULL && node_10->data == 10 && node_10->left == NULL && node_10->right == NULL );
   printf("\n");
 
   root = NULL;
