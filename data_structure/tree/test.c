@@ -31,7 +31,7 @@ int main() {
   printf("\n");
 
   root = NULL;
-  int data_values[] = {50, 30, 70, 20, 40};
+  int data_values[] = {50, 30, 70, 80, 20, 40, 60, 10};
   int len = sizeof(data_values) / sizeof(data_values[0]);
   printf("Valores: ");
   for (int i = 0; i < len; i++) {
@@ -49,13 +49,13 @@ int main() {
   TNode *node_100_dont_searched = search_node(root, 100);
   TEST("Nó 100 não encontrado", node_100_dont_searched == NULL);
   printf("\n");
-  
-  printf("Pre-order: ");
-  pre_order(root);
-  printf("\n");
 
   printf("In-order: ");
   in_order(root);
+  printf("\n");
+
+  printf("Pre-order: ");
+  pre_order(root);
   printf("\n");
 
   printf("Post-order: ");
