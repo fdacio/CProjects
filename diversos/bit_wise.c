@@ -149,11 +149,24 @@ int main() {
 
   // BIT_0(1<<0) - liga bit 0 do PORT1
   printf("(PORT1 |= BIT_0)-> Ligar BIT_0 do PORT1\n");
-  PORT1 |= BIT_0; // Equivale a PORT1 = PORT1 | BIT_0, operação PORT1 =
-                  // 0b00000000 | 0b00000001 -> PORT1 = 0b00000001
+  PORT1 |= BIT_0; // Equivale a PORT1 = PORT1 | BIT_0, operação PORT1 = 0b00000000 | 0b00000001 -> PORT1 = 0b00000001
   byte_to_binary(PORT1, string_binaria);
   printf("Novo valor do PORT1: %s\n", string_binaria);
   printf("\n");
+
+  printf("(PORT1 |= BIT_7)-> Ligar BIT_7 do PORT1\n");
+  PORT1 |= BIT_7; // Equivale a PORT1 = PORT1 | BIT_7
+  byte_to_binary(PORT1, string_binaria);
+  printf("Novo valor do PORT1: %s\n", string_binaria);
+  printf("\n");
+
+  printf("(PORT1 |= BIT_7)-> Ligar BIT_7 do PORT1\n");
+  PORT1 |= BIT_7; // Equivale a PORT1 = PORT1 | BIT_7
+  byte_to_binary(PORT1, string_binaria);
+  printf("Novo valor do PORT1: %s\n", string_binaria);
+  printf("\n");
+
+
 
   // BIT_3(1<<3) - desliga bit 3 do PORT2
   printf("(PORT2 &= ~BIT_3)-> Desligar BIT_3 do PORT2\n");
