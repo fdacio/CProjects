@@ -8,7 +8,7 @@ const unsigned int MAX = 4;
 
 void push(TItemStack *new_item, TItemStack **topStack) {
 
-if (!(*topStack)) {
+  if (!(*topStack)) {
     new_item->count = 1;
     *topStack = new_item; // fist item
     return;
