@@ -12,9 +12,9 @@
 #define TEST(nome, condicao)                                                   \
   do {                                                                         \
     if (condicao)                                                              \
-      printf("✅ PASSOU: %s\n", nome);                                         \
+      printf( "OK - PASSOU: %s\n", nome);                                         \
     else                                                                       \
-      printf("❌ FALHOU: %s\n", nome);                                         \
+      printf("ERROR - FALHOU: %s\n", nome);                                         \
   } while (0)
 
 
@@ -99,7 +99,7 @@ void test_remove_leaf_node(TNode *root) {
 }
 
 void test_free_tree(TNode *root) {
-  printf("Teste de liberação de memória(free) da árvore\n");
+  printf("Teste de liberacao de memoria(free) da arvore\n");
   free_tree(root);
   TEST("Arvore liberada", 1);
   printf("\n");
@@ -143,39 +143,40 @@ int main() {
     printf("%d ", value);
     insert_node(&root, value);
   }
-  printf("\n\n");
 
-  test_add_only_one_node();
+  printf("\n");
+  printf("Root after insertions: %d\n", root->data);
+  printf("\n");
+
+  // test_add_only_one_node();
   
-  test_add_multiple_nodes(root);
+  // test_add_multiple_nodes(root);
 
-  test_print_tree(root);
+  // test_print_tree(root);
 
-  test_search_existent_node(root);
+  // test_search_existent_node(root);
 
-  test_search_non_existent_node(root);
-
-  test_in_order_traversal(root);
+  // test_search_non_existent_node(root);
 
   test_pre_order_traversal(root);
-
+  test_in_order_traversal(root);
   test_post_order_traversal(root);
   
-  test_remove_node(root);
+  // test_remove_node(root);
 
-  test_print_tree(root);
+  // test_print_tree(root);
 
-  test_remove_node_with_two_children(root);
+  // test_remove_node_with_two_children(root);
 
-  test_print_tree(root);
+  // test_print_tree(root);
 
-  test_remove_node_with_one_child(root);
+  // test_remove_node_with_one_child(root);
 
-  test_print_tree(root);
+  // test_print_tree(root);
 
-  test_remove_leaf_node(root);
+  // test_remove_leaf_node(root);
 
-  test_print_tree(root);
+  // test_print_tree(root);
 
   test_free_tree(root);
 

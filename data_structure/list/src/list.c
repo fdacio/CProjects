@@ -90,7 +90,12 @@ void swap_item(TItemList *_target, TItemList *_source) {
   _source->prev = source_prev;
 }
 
-// Ordena uma lista de itens por pontos decrescente
+/**
+ * Método de ordenação da lista de clubes por pontos decrescente.
+ * Método de ordenação simples, baseado no algoritmo de seleção.
+ * A cada iteração, o item com maior pontuação é selecionado e colocado na posição correta.
+ * @param list Ponteiro para a lista de clubes a ser ordenada.
+ */
 void sort_list(TItemList *list) {
   if (!list) {
     return;

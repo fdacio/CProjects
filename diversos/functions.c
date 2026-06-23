@@ -11,11 +11,9 @@ int main() {
   y = 3.5;
   int n1 = 8;
   int n2 = 2;
-  a = &n1;
-  b = &n2;
 
   printf("sum()  -> %.2f\n", sum(x, y));
-  printf("calc() -> %d\n", calc(a, b));
+  printf("calc() -> %d\n", calc(&n1, &n2));
 }
 
 float sum(int x, int y) {
@@ -24,6 +22,6 @@ float sum(int x, int y) {
 }
 
 int calc(int *a, int *b) {
-  int _rcalc = *a + *b;
+  int _rcalc = (*a) * (*b);
   return _rcalc;
 }

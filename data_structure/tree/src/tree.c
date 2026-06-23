@@ -47,6 +47,7 @@ void pre_order(TNode *root) {
     printf("%d ", root->data);
     pre_order(root->left);
     pre_order(root->right);
+
   }
 }
 
