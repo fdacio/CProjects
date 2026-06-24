@@ -12,18 +12,18 @@ void print_list(const TItemList *list) {
 
   printf("Pointer Table -> %p\n", (void *)aux);
 
-  printf("|%-2s|%-4s|%-25s|%-8s|\n", "#", "ID", "Clube", "Pontos");
+  printf("|%-6s|%-6s|%-25s|%-8s|\n", "#", "ID", "Clube", "Pontos");
   for (int i = 0; i < 44; i++)
     printf("-");
   printf("\n");
   
-  short int pos = 1;
+  int pos = 1;
 
   while (aux) {
 
-    printf("|%2d|", pos++);
+    printf("|%6d|", pos++);
 
-    printf("%4d|", aux->data->id);
+    printf("%6d|", aux->data->id);
 
     printf("%-25s|", aux->data->nome);
 

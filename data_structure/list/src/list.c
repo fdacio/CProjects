@@ -1,8 +1,8 @@
-#include "list.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "list.h"
 
 static int id = 0;
 
@@ -96,7 +96,7 @@ void swap_item(TItemList *_target, TItemList *_source) {
  * A cada iteração, o item com maior pontuação é selecionado e colocado na posição correta.
  * @param list Ponteiro para a lista de clubes a ser ordenada.
  */
-void sort_list(TItemList *list) {
+void sort_list_by_points(TItemList *list) {
   if (!list) {
     return;
   }
@@ -104,18 +104,36 @@ void sort_list(TItemList *list) {
   while (current) {
     TItemList *max_current = current;
     TItemList *next = current->next;
-
     while (next) {
       if (next->data->pontos > max_current->data->pontos) {
         max_current = next;
       }
       next = next->next;
     }
-
     if (max_current != current) {
       swap_item(current, max_current);
     }
+    current = current->next;
+  }
+}
 
+void sort_list_by_name(TItemList *list) {
+  if (!list) {
+    return;
+  }
+  TItemList *current = list;
+  while (current) {
+    TItemList *max_current = current;
+    TItemList *next = current->next;
+    while (next) {
+      if (strcmp(next->data->nome, max_current->data->nome) > 0) {
+        max_current = next;
+      }
+      next = next->next;
+    }
+    if (max_current != current) {
+      swap_item(current, max_current);
+    }
     current = current->next;
   }
 }

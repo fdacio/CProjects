@@ -8,13 +8,13 @@
  * Create a new node with the specified data.
  * @param data The data to be stored in the node.
  */
-TNode *create_node(int data) {
+TNode *create_node(const char *data) {
   TNode *new_node = (TNode *)malloc(sizeof(TNode));
   if (new_node == NULL) {
     perror("malloc failed");
     return NULL;
   }
-  new_node->data = data;
+  strcpy(new_node->data, data);
   new_node->left = NULL;
   new_node->right = NULL;
   return new_node;
@@ -25,12 +25,12 @@ TNode *create_node(int data) {
  * @param root Pointer to the root of the tree.
  * @param data The data to be inserted.
  */
-void insert_node(TNode **root, int data) {
+void insert_node(TNode **root, const char *data) {
   if (*root == NULL) {
     *root = create_node(data);
     return;
   }
-  if (data > (*root)->data) {
+  if (strcmp(data, (*root)->data) > 0) {
     insert_node(&(*root)->right, data);
   } else {
     insert_node(&(*root)->left, data);
@@ -44,7 +44,7 @@ void insert_node(TNode **root, int data) {
  */
 void pre_order(TNode *root) {
   if (root != NULL) {
-    printf("%d ", root->data);
+    printf("%s ", root->data);
     pre_order(root->left);
     pre_order(root->right);
 
@@ -59,7 +59,7 @@ void pre_order(TNode *root) {
 void in_order(TNode *root) {
   if (root != NULL) {
     in_order(root->left);
-    printf("%d ", root->data);
+    printf("%s ", root->data);
     in_order(root->right);
   }
 }
@@ -73,7 +73,7 @@ void post_order(TNode *root) {
   if (root != NULL) {
     post_order(root->left);
     post_order(root->right);
-    printf("%d ", root->data);
+    printf("%s ", root->data);
   }
 }
 
@@ -84,11 +84,11 @@ void post_order(TNode *root) {
  * @param data The data to search for.
  * @return Pointer to the node if found, otherwise NULL.
  */
-TNode *search_node(TNode *root, int data) {
-  if (root == NULL || root->data == data) {
+TNode *search_node(TNode *root, const char *data) {
+  if (root == NULL || strcmp(root->data, data) == 0) {
     return root;
   }
-  if (data < root->data) {
+  if (strcmp(data, root->data) < 0) {
     return search_node(root->left, data);
   } else {
     return search_node(root->right, data);
@@ -100,13 +100,13 @@ TNode *search_node(TNode *root, int data) {
  * @param root Pointer to the root of the tree.
  * @param data The data of the node to be removed.
  */
-void remove_node(TNode **root, int data) {
+void remove_node(TNode **root, const char *data) {
   if (*root == NULL) {
     return;
   }
-  if (data < (*root)->data) {
+  if (strcmp(data, (*root)->data) < 0) {
     remove_node(&(*root)->left, data);
-  } else if (data > (*root)->data) {
+  } else if (strcmp(data, (*root)->data) > 0) { 
     remove_node(&(*root)->right, data);
   } else {// Nesse ponto encontramos o nó a ser removido
     // Node with only one child or no child
@@ -124,7 +124,7 @@ void remove_node(TNode **root, int data) {
       while (temp->left != NULL) {
         temp = temp->left;
       }
-      (*root)->data = temp->data; // Copy the inorder successor's content to this node
+      strcpy((*root)->data, temp->data); // Copy the inorder successor's content to this node
       remove_node(&(*root)->right, temp->data); // Delete the inorder successor
     }
   }
