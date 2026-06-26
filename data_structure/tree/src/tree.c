@@ -3,6 +3,7 @@
 #include "tree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
  * Create a new node with the specified data.
@@ -30,10 +31,10 @@ void insert_node(TNode **root, const char *data) {
     *root = create_node(data);
     return;
   }
-  if (strcmp(data, (*root)->data) > 0) {
-    insert_node(&(*root)->right, data);
-  } else {
+  if (strcmp(data, (*root)->data) < 0) {
     insert_node(&(*root)->left, data);
+  } else {
+    insert_node(&(*root)->right, data);
   }
 }
 

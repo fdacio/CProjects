@@ -1,3 +1,6 @@
+/**
+ * mfw(Matriz File of Words) - Module for managing words from a file.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

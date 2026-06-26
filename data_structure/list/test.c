@@ -1,6 +1,5 @@
 /* Testes para as funções de lista */
-/*** Compile and build: gcc test.c src/list.c src/l_utils.c -Iinclude -o
- * build/test  ****/
+/*** Compile and build: gcc test.c src/list.c src/l_utils.c -Iinclude -o build/test  ****/
 /*** Execute: ./build/test ****/
 #include "l_utils.h"
 #include "list.h"
@@ -171,7 +170,7 @@ void test_sort_list() {
   add_end_sing_linked(new_item_list(2, "Palmeiras", 30), &list);
   add_end_sing_linked(new_item_list(3, "Sao Paulo", 20), &list);
 
-  sort_list(list);
+  sort_list_by_points(list);
 
   TEST("1º lugar: Palmeiras (30pts)",
        strcmp(list->data->nome, "Palmeiras") == 0);

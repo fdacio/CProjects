@@ -4,24 +4,31 @@
 #include <string.h>
 #include "list.h"
 
-static int id = 0;
-
-// Função para adicionar um item no final em uma lista singularmente encadeada
-// Parametro **list -> passagem por referencia, para refletir modificação na variável global da lista
+/**
+ * Função para adicionar um item no final em uma lista singularmente encadeada
+ * @param new_item Ponteiro para o item a ser adicionado
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
+ */
 void add_end_sing_linked(TItemList *new_item, TItemList **list) {
+  // se a lista estiver vazia, adiciona o primeiro e sai
   if (!*list) {
     *list = new_item;
     return;
   }
+  // se a lista não estiver vazia, percorre até o último
   TItemList *item = *list;
   while (item->next) {
     item = item->next;
   }
+  // nesse ponto, o ponteiro next do último item da lista aponta para o novo item
   item->next = new_item;
 }
 
-// Função para adicionar um item no final em uma lista duplamente encadeada
-// Parametro **list -> passagem por referencia, para refletir modificação na variável global da lista
+/**
+ * Função para adicionar um item no final em uma lista duplamente encadeada
+ * @param new_item Ponteiro para o item a ser adicionado
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
+ */
 void add_end_dup_linked(TItemList *new_item, TItemList **list) {
   // se a lista estiver vazia, adiciona o primeiro e sai
   if (!*list) {
@@ -40,17 +47,27 @@ void add_end_dup_linked(TItemList *new_item, TItemList **list) {
   item->next = new_item;
 }
 
-// Função para adicionar um item no inicio em uma lista singlamente encadeada
+/**
+ * Função para adicionar um item no inicio em uma lista singularmente encadeada
+ * @param new_item Ponteiro para o item a ser adicionado
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
+ */
 void add_start_sing_linked(TItemList *new_item, TItemList **list) {
-  if (!*list) {
+  if (!*list) { // if the list is empty, add the first item and return
     *list = new_item;
     return;
   }
+  // if the list is not empty, add the new item at the beginning
   new_item->next = *list;
+  // update the list pointer to point to the new item
   *list = new_item;
 }
 
-// Função para adicionar um item ordenado em uma lista singlamente encadeada
+/**
+ * Função para adicionar um item ordenado em uma lista singularmente encadeada
+ * @param new_item Ponteiro para o item a ser adicionado
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
+ */
 void add_sorted_sing_linked(TItemList *new_item, TItemList **list) {
   TItemList *p = *list;
   TItemList *old = NULL;
@@ -69,8 +86,11 @@ void add_sorted_sing_linked(TItemList *new_item, TItemList **list) {
   }
 }
 
-// Função para troca de posição de dois itens na lista singlamente/duplamente
-// encadeada
+/**
+ * Função para trocar os dados de dois itens na lista singularmente/duplamente encadeada
+ * @param _target Ponteiro para o item alvo a ser trocado
+ * @param _source Ponteiro para o item fonte a ser trocado
+ */
 void swap_item(TItemList *_target, TItemList *_source) {
   // Salva ponteiros originais
   TItemList *target_next = _target->next;
@@ -91,8 +111,8 @@ void swap_item(TItemList *_target, TItemList *_source) {
 }
 
 /**
- * Método de ordenação da lista de clubes por pontos decrescente.
- * Método de ordenação simples, baseado no algoritmo de seleção.
+ * Função de ordenação da lista de clubes por pontos decrescente.
+ * Função de ordenação simples, baseado no algoritmo de seleção.
  * A cada iteração, o item com maior pontuação é selecionado e colocado na posição correta.
  * @param list Ponteiro para a lista de clubes a ser ordenada.
  */
@@ -117,6 +137,12 @@ void sort_list_by_points(TItemList *list) {
   }
 }
 
+/**
+ * Função de ordenação da lista de clubes por nome em ordem alfabética.
+ * Função de ordenação simples, baseado no algoritmo de seleção.
+ * A cada iteração, o item com menor nome é selecionado e colocado na posição correta.
+ * @param list Ponteiro para a lista de clubes a ser ordenada.
+ */
 void sort_list_by_name(TItemList *list) {
   if (!list) {
     return;
@@ -126,7 +152,7 @@ void sort_list_by_name(TItemList *list) {
     TItemList *max_current = current;
     TItemList *next = current->next;
     while (next) {
-      if (strcmp(next->data->nome, max_current->data->nome) > 0) {
+      if (strcmp(next->data->nome, max_current->data->nome) < 0) {
         max_current = next;
       }
       next = next->next;
@@ -138,7 +164,12 @@ void sort_list_by_name(TItemList *list) {
   }
 }
 
-// Retorna um ponteiro para o item encontado por ID
+/**
+ * Função para encontrar um item na lista por ID.
+ * @param id ID do item a ser encontrado.
+ * @param list Ponteiro para a lista de clubes.
+ * @return Ponteiro para o item encontrado ou NULL se não encontrado.
+ */
 TItemList *find_item(const int id, TItemList *list) {
   TItemList *aux = list;
   while (aux) {
@@ -150,7 +181,12 @@ TItemList *find_item(const int id, TItemList *list) {
   return NULL;
 }
 
-// Retorna um ponteiro para o item encontado por NOME
+/**
+ * Função para encontrar um item na lista por nome.
+ * @param nome Nome do item a ser encontrado.
+ * @param list Ponteiro para a lista de clubes.
+ * @return Ponteiro para o item encontrado ou NULL se não encontrado.
+ */
 TItemList *find_item_by_name(const char *nome, TItemList *list) {
   TItemList *aux = list;
   while (aux) {
@@ -162,7 +198,11 @@ TItemList *find_item_by_name(const char *nome, TItemList *list) {
   return NULL;
 }
 
-// remove um item de uma lista singularmente lincada
+/**
+ * Função para remover um item de uma lista singularmente ligada.
+ * @param id ID do item a ser removido.
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**))
+ */
 void remove_item_sing_linked(int id, TItemList **list) {
   
   if (!*list)
@@ -195,7 +235,11 @@ void remove_item_sing_linked(int id, TItemList **list) {
   }
 }
 
-// remove um item de uma lista duplamente lincada
+/**
+ * Função para remover um item de uma lista duplamente ligada.
+ * @param _remove Ponteiro para o item a ser removido.
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**)  
+ */
 void remove_item_dup_linked(TItemList *_remove, TItemList **list) {
 
   if (!*list)
@@ -241,7 +285,10 @@ void remove_item_dup_linked(TItemList *_remove, TItemList **list) {
   free(_remove);
 }
 
-// Liebra as memórias dos itens da lista
+/**
+ * Função para liberar a memória alocada para uma lista de clubes.
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
+ */
 void free_list(TItemList **list) {
   if (!list)
     return;
@@ -256,10 +303,22 @@ void free_list(TItemList **list) {
   *list = NULL; // opcional: define a lista como NULL após liberar
 }
 
-// Gera o próximo ID utilizando um variável estática global
-int get_next_id() { return ++id; }
+/**
+ * Função para gerar o próximo ID de clube.
+ * @return O próximo ID de clube.
+ */
+int get_next_id() { 
+  static int id = 0;
+  return ++id; 
+}
 
-// Retorna um ponteiro para um item de lista alocado
+/**
+ * Função para criar um novo item de lista com dados de clube.
+ * @param _id ID do clube.
+ * @param nome Nome do clube.
+ * @param pontos Pontos do clube.
+ * @return Ponteiro para o novo item de lista.  
+ */
 TItemList *new_item_list(int _id, const char *nome, int pontos) {
   
   TItemList *new_item = (TItemList *)malloc(sizeof(TItemList));

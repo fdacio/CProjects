@@ -2,19 +2,19 @@
 /*** Compile and build: gcc test.c src/tree.c src/t_utils.c -Iinclude -o
  * build/test  ****/
 /*** Execute: ./build/test ****/
-
-#include "t_utils.h"
-#include "tree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "t_utils.h"
+#include "tree.h"
 
 // Macro auxiliar para exibir resultado
 #define TEST(nome, condicao)                                                   \
   do {                                                                         \
     if (condicao)                                                              \
-      printf( "OK - PASSOU: %s\n", nome);                                         \
+      printf( "OK - PASSOU: %s\n", nome);                                      \
     else                                                                       \
-      printf("ERROR - FALHOU: %s\n", nome);                                         \
+      printf("ERROR - FALHOU: %s\n", nome);                                    \
   } while (0)
 
 

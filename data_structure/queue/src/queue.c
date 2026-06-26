@@ -1,7 +1,7 @@
-#include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "queue.h"
 
 const unsigned int MAX = 4;
 
@@ -9,6 +9,12 @@ const unsigned int MAX = 4;
 TItemQueue *cpy_first_item(TItemQueue *iniQueue);
 void swap_item_queue(TItemQueue *_dest, TItemQueue *_src);
 
+/**
+ * Função para adicionar um item ao final da fila.
+ * @param new_item Ponteiro para o item a ser adicionado.
+ * @param iniQueue Ponteiro para o ponteiro do início da fila (passagem por referência (**)).
+ * @param endQueue Ponteiro para o ponteiro do final da fila (passagem por referência (**)).
+ */
 void enqueue(TItemQueue *new_item, TItemQueue **iniQueue,
              TItemQueue **endQueue) {
 
@@ -28,6 +34,12 @@ void enqueue(TItemQueue *new_item, TItemQueue **iniQueue,
   *endQueue = new_item;
 }
 
+/**
+ * Função para remover o primeiro item da fila.
+ * @param iniQueue Ponteiro para o ponteiro do início da fila (passagem por referência (**)).
+ * @param endQueue Ponteiro para o ponteiro do final da fila (passagem por referência (**)).
+ * @return Ponteiro para o item removido ou NULL se a fila estiver vazia. 
+ */
 TItemQueue *dequeue(TItemQueue **iniQueue, TItemQueue **endQueue) {
 
   if (!(*iniQueue))
@@ -68,6 +80,11 @@ TItemQueue *dequeue(TItemQueue **iniQueue, TItemQueue **endQueue) {
   return removed;
 }
 
+/**
+ * Função para criar um novo item de fila.
+ * @param name Nome do item.
+ * @return Ponteiro para o novo item de fila ou NULL em caso de falha.
+ */
 TItemQueue *new_item_queue(const char *name) {
 
   TItemQueue *new_item = (TItemQueue *)malloc(sizeof(TItemQueue));
@@ -83,6 +100,10 @@ TItemQueue *new_item_queue(const char *name) {
   return new_item;
 }
 
+/**
+ * Função para liberar a memória alocada para uma fila.
+ * @param iniQueue Ponteiro para o início da fila.
+ */
 void free_queue(TItemQueue *iniQueue) {
   if (!iniQueue)
     return;
@@ -96,9 +117,12 @@ void free_queue(TItemQueue *iniQueue) {
   }
 }
 
+/**
+ * Função para copiar o primeiro item de uma fila.
+ * @param iniQueue Ponteiro para o início da fila.
+ * @return Ponteiro para o novo item copiado ou NULL em caso de falha.
+ */
 TItemQueue *cpy_first_item(TItemQueue *iniQueue) {
-
-  //  TItemQueue *first_item = iniQueue;
 
   TItemQueue *first_item = malloc(sizeof(TItemQueue));
 
@@ -112,6 +136,11 @@ TItemQueue *cpy_first_item(TItemQueue *iniQueue) {
   return first_item;
 }
 
+/**
+ * Função para trocar os dados de dois itens na fila
+ * @param _dest Ponteiro para o item de destino.
+ * @param _src Ponteiro para o item de origem.
+ */
 void swap_item_queue(TItemQueue *_dest, TItemQueue *_src) {
 
   char *_name = _src->name;
