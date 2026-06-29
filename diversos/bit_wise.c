@@ -49,12 +49,12 @@ char *to_binary(unsigned char decimal) {
 
 int main() {
 
-  printf(" *** Início do programa - bitwise ***.\n\n");
+  printf(" *** Inicio do programa - bitwise ***.\n\n");
 
   unsigned char value1 = 255; // 0 a 255
-  unsigned char value4 = 2;   // 0 a 255
   signed char value2 = -127;  //-127 a 127
   signed char value3 = 127;
+  unsigned char value4 = 2;   // 0 a 255
   signed char value5 = 2; //-127 a 127
   char ch1 = 'A';
   char ch2 = 65;
@@ -93,22 +93,14 @@ int main() {
   char *binary_1 = "0b00000001";
 
   printf("%8d in binary %s\n", value, to_binary(value));
-  printf("(%d>>0): %3d - %s & %s = %d\n", value, (value >> 0),
-         to_binary((value >> 0)), binary_1, (value >> 0) & 1);
-  printf("(%d>>1): %3d - %s & %s = %d\n", value, (value >> 1),
-         to_binary((value >> 1)), binary_1, (value >> 1) & 1);
-  printf("(%d>>2): %3d - %s & %s = %d\n", value, (value >> 2),
-         to_binary((value >> 2)), binary_1, (value >> 2) & 1);
-  printf("(%d>>3): %3d - %s & %s = %d\n", value, (value >> 3),
-         to_binary((value >> 3)), binary_1, (value >> 3) & 1);
-  printf("(%d>>4): %3d - %s & %s = %d\n", value, (value >> 4),
-         to_binary((value >> 4)), binary_1, (value >> 4) & 1);
-  printf("(%d>>5): %3d - %s & %s = %d\n", value, (value >> 5),
-         to_binary((value >> 5)), binary_1, (value >> 5) & 1);
-  printf("(%d>>6): %3d - %s & %s = %d\n", value, (value >> 6),
-         to_binary((value >> 6)), binary_1, (value >> 6) & 1);
-  printf("(%d>>7): %3d - %s & %s = %d\n", value, (value >> 7),
-         to_binary((value >> 7)), binary_1, (value >> 7) & 1);
+  printf("(%d>>0): %3d - %s & %s = %d\n", value, (value >> 0), to_binary((value >> 0)), binary_1, (value >> 0) & 1);
+  printf("(%d>>1): %3d - %s & %s = %d\n", value, (value >> 1), to_binary((value >> 1)), binary_1, (value >> 1) & 1);
+  printf("(%d>>2): %3d - %s & %s = %d\n", value, (value >> 2), to_binary((value >> 2)), binary_1, (value >> 2) & 1);
+  printf("(%d>>3): %3d - %s & %s = %d\n", value, (value >> 3), to_binary((value >> 3)), binary_1, (value >> 3) & 1);
+  printf("(%d>>4): %3d - %s & %s = %d\n", value, (value >> 4), to_binary((value >> 4)), binary_1, (value >> 4) & 1);
+  printf("(%d>>5): %3d - %s & %s = %d\n", value, (value >> 5), to_binary((value >> 5)), binary_1, (value >> 5) & 1);
+  printf("(%d>>6): %3d - %s & %s = %d\n", value, (value >> 6), to_binary((value >> 6)), binary_1, (value >> 6) & 1);
+  printf("(%d>>7): %3d - %s & %s = %d\n", value, (value >> 7), to_binary((value >> 7)), binary_1, (value >> 7) & 1);
   printf("\n");
 
   // unsigned char PORT1 =  0;
@@ -138,14 +130,27 @@ int main() {
   byte_to_binary(BIT_0, string_binaria);
   printf("BIT_0: %s\n", string_binaria);
 
+  byte_to_binary(BIT_1, string_binaria);
+  printf("BIT_1: %s\n", string_binaria);
+
+  byte_to_binary(BIT_2, string_binaria);
+  printf("BIT_2: %s\n", string_binaria);
+
   byte_to_binary(BIT_3, string_binaria);
   printf("BIT_3: %s\n", string_binaria);
+
+  byte_to_binary(BIT_4, string_binaria);
+  printf("BIT_4: %s\n", string_binaria);
 
   byte_to_binary(BIT_5, string_binaria);
   printf("BIT_5: %s\n", string_binaria);
 
-  byte_to_binary(BIT_4, string_binaria);
-  printf("BIT_4: %s\n\n", string_binaria);
+  byte_to_binary(BIT_6, string_binaria);
+  printf("BIT_6: %s\n", string_binaria);
+
+  byte_to_binary(BIT_7, string_binaria);
+  printf("BIT_7: %s\n", string_binaria);
+
 
   // BIT_0(1<<0) - liga bit 0 do PORT1
   printf("(PORT1 |= BIT_0)-> Ligar BIT_0 do PORT1\n");
@@ -160,13 +165,13 @@ int main() {
   printf("Novo valor do PORT1: %s\n", string_binaria);
   printf("\n");
 
-  printf("(PORT1 |= BIT_7)-> Ligar BIT_7 do PORT1\n");
-  PORT1 |= BIT_7; // Equivale a PORT1 = PORT1 | BIT_7
-  byte_to_binary(PORT1, string_binaria);
-  printf("Novo valor do PORT1: %s\n", string_binaria);
+// BIT_4(1<<4) - desliga bit 4 do PORT4
+  printf("(PORT4 &= ~BIT_4)-> Desligar BIT_4 do PORT4\n");
+  PORT4 &= ~BIT_4; // Equivale a PORT4 = PORT4 & ~BIT_4, operação PORT4 =
+                   // 0b00010101 & 0b11101111 -> PORT4 = 0b00000101
+  byte_to_binary(PORT4, string_binaria);
+  printf("Novo valor de PORT4: %s\n", string_binaria);
   printf("\n");
-
-
 
   // BIT_3(1<<3) - desliga bit 3 do PORT2
   printf("(PORT2 &= ~BIT_3)-> Desligar BIT_3 do PORT2\n");
@@ -193,14 +198,13 @@ int main() {
   printf("\n");
 
   printf("(PORT4 & BIT_4) -> Leitura do bit 4 de PORT4:\n");
-  int bit4_in_port4 =
-      (PORT4 & BIT_4) ? 1 : 0; // Verifica se o bit 4 de PORT4 está ligado
+  int bit4_in_port4 = (PORT4 & BIT_4) ? 1 : 0; // Verifica se o bit 4 de PORT4 está ligado
   if (bit4_in_port4) {
     printf("O bit 4 de PORT4 está ligado.\n");
   } else {
     printf("O bit 4 de PORT4 está desligado.\n");
   }
-  printf("Valor binário do bit 4 de PORT4: %d\n\n", bit4_in_port4);
+  printf("Valor do bit 4 na PORT4: %d\n\n", bit4_in_port4);
 
   printf("(PORT4 & BIT_5) -> Leitura do bit 5 de PORT4:\n");
   if ((PORT4 & BIT_5)) {
@@ -208,7 +212,7 @@ int main() {
   } else {
     printf("O bit 5 de PORT4 está desligado.\n");
   }
-  printf("Valor binário do bit 5 de PORT4: %d\n\n", (PORT4 & BIT_5));
+  printf("Valor do bit 5 na PORT4: %d\n\n", (PORT4 & BIT_5));
 
   printf(" *** Fim do programa. *** \n");
   return 0;

@@ -29,12 +29,12 @@ int main(int argc, char *argv[]) {
         insert_node(&root, words[i]);
     }
 
-    char *_target = argv[1];
-    TNode *_found = search_node(root, _target);
+    char *_text = argv[1];
+    TNode *_found = search_node(root, _text);
     if (_found != NULL) {
-        printf("Found node '%s'\n", _target);
+        printf("Found node '%s' - Pointer: %p\n", _text, (void *)_found);
     } else {
-        printf("Node '%s' not found.\n", _target);
+        printf("Node '%s' not found.\n", _text);
     }
 
     // Free allocated memory

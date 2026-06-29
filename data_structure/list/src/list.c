@@ -63,6 +63,18 @@ void add_start_sing_linked(TItemList *new_item, TItemList **list) {
   *list = new_item;
 }
 
+void add_start_dup_linked(TItemList *new_item, TItemList **list) {
+  if (!*list) { // if the list is empty, add the first item and return
+    *list = new_item;
+    return;
+  }
+  // if the list is not empty, add the new item at the beginning
+  new_item->next = *list;
+  (*list)->prev = new_item; // update the previous pointer of the old first item
+  // update the list pointer to point to the new item
+  *list = new_item;
+}
+
 /**
  * Função para adicionar um item ordenado em uma lista singularmente encadeada
  * @param new_item Ponteiro para o item a ser adicionado
@@ -132,6 +144,43 @@ void sort_list_by_points(TItemList *list) {
     }
     if (max_current != current) {
       swap_item(current, max_current);
+    }
+    current = current->next;
+  }
+}
+
+/**
+ * Função de ordenação da lista de clubes por pontos decrescente.
+ * Implementação com Bubble Sort (ordenação por troca).
+ * A cada iteração, elementos adjacentes são comparados e trocados se necessário.
+ * @param list Ponteiro para a lista de clubes a ser ordenada.
+ */
+void bubble_sort_by_points(TItemList *list) {
+  if (!list) {
+    return;
+  }
+  
+  TItemList *current = list;
+  int swapped;
+  
+  // Loop externo: percorre toda a lista
+  while (current) {
+    swapped = 0;
+    TItemList *next = list;
+    
+    // Loop interno: compara e troca elementos adjacentes
+    while (next && next->next) {
+      // Se o elemento atual é menor que o próximo, troca
+      if (next->data->pontos < next->next->data->pontos) {
+        swap_item(next, next->next);
+        swapped = 1;
+      }
+      next = next->next;
+    }
+    
+    // Se não houve trocas, lista já está ordenada
+    if (!swapped) {
+      break;
     }
     current = current->next;
   }

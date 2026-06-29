@@ -1,6 +1,7 @@
 /* Testes para as funções de pilha */
-/*** Compile and build: gcc test.c src/stack.c src/s_utils.c -Iinclude -o build/test  ****/
-/*** Execute: ./build/test ****/
+
+/*** Compile and build: gcc test.c src/stack.c src/s_utils.c -Iinclude -o build/test  ***/
+/*** Execute: ./build/test ***/
 
 #include "s_utils.h"
 #include "stack.h"
@@ -19,8 +20,7 @@
 void test_new_item() {
   printf("\n--- new_item ---\n");
   TItemStack *item = new_item_stack("12345678901234567890");
-  int _b =
-      (strcmp(item->name, "1234567890123456789") == 0) && (item->prev == NULL);
+  int _b = (strcmp(item->name, "1234567890123456789") == 0) && (item->prev == NULL);
   TEST("New Item", _b);
 }
 
@@ -32,6 +32,7 @@ void test_push() {
 
   TItemStack *i1 = new_item_stack("Soma");
   push(i1, &topStack);
+
   TEST("Push Item 1 - Soma", strcmp(topStack->name, "Soma") == 0);
   print_stack(topStack);
 

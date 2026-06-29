@@ -20,6 +20,7 @@ void add_sorted_sing_linked(TItemList *new_item, TItemList **list);
 void swap_item(TItemList *target, TItemList *source);
 void sort_list_by_points(TItemList *list);
 void sort_list_by_name(TItemList *list);
+void bubble_sort_by_points(TItemList *list);
 TItemList *find_item(const int id, TItemList *list);
 TItemList *find_item_by_name(const char *nome, TItemList *list);
 void remove_item_sing_linked(int id, TItemList **list);
