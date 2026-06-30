@@ -107,7 +107,7 @@ void print_descriptor(const TDescriptorList *descriptor) {
   }
 
   printf("Descriptor:\n");
-  printf("First: %p\n", (void *)descriptor->first);
-  printf("Last: %p\n", (void *)descriptor->last);
-  printf("Size: %d\n", descriptor->size);
+  printf("First: %s\n", descriptor->first->data->nome);
+  printf("Last:  %s\n", descriptor->last->data->nome);
+  printf("Size:  %d\n", descriptor->size);
 }

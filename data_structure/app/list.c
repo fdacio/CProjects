@@ -53,23 +53,21 @@ int main(int argc, char *argv[]) {
     printf("Creating descriptor for the list...\n");
     TDescriptorList *descriptor = create_descriptor_list(list);
     print_descriptor(descriptor);
-    print_item(descriptor->first);
-    print_item(descriptor->last);
     free(descriptor); // Free the descriptor memory
 
     unsigned long long _time_start = 0;
     unsigned long long _time_end = 0;
 
     if (strcmp(sort_method, "s") == 0) {
-        printf("Sorting list by points using selection sort:\n");
+        printf("Sorting list by name using selection sort:\n");
         _time_start = get_time_microseconds();
-        sort_list_by_points(list);
+        selection_sort_by_name(list);
         _time_end = get_time_microseconds();      
         printf("Time taken selection sort: %llu microseconds\n", _time_end - _time_start);
     } else if (strcmp(sort_method, "b") == 0) {
-        printf("Sorting list by points using bubble sort:\n");
+        printf("Sorting list by name using bubble sort:\n");
         _time_start = get_time_microseconds();
-        bubble_sort_by_points(list);
+        bubble_sort_by_name(list);
         _time_end = get_time_microseconds();      
         printf("Time taken bubble sort: %llu microseconds\n", _time_end - _time_start);
     } else {
@@ -86,8 +84,6 @@ int main(int argc, char *argv[]) {
     printf("Creating descriptor 2 for the list...\n");
     TDescriptorList *descriptor_2 = create_descriptor_list(list);
     print_descriptor(descriptor_2);
-    print_item(descriptor_2->first);
-    print_item(descriptor_2->last);
     free(descriptor_2); // Free the descriptor memory
 
     // Libera a memória alocada

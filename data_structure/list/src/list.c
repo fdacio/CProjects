@@ -128,7 +128,7 @@ void swap_item(TItemList *_target, TItemList *_source) {
  * A cada iteração, o item com maior pontuação é selecionado e colocado na posição correta.
  * @param list Ponteiro para a lista de clubes a ser ordenada.
  */
-void sort_list_by_points(TItemList *list) {
+void selection_sort_by_points(TItemList *list) {
   if (!list) {
     return;
   }
@@ -191,8 +191,8 @@ void bubble_sort_by_points(TItemList *list) {
  * Função de ordenação simples, baseado no algoritmo de seleção.
  * A cada iteração, o item com menor nome é selecionado e colocado na posição correta.
  * @param list Ponteiro para a lista de clubes a ser ordenada.
- */
-void sort_list_by_name(TItemList *list) {
+ */ 
+void selection_sort_by_name(TItemList *list) {
   if (!list) {
     return;
   }
@@ -212,6 +212,44 @@ void sort_list_by_name(TItemList *list) {
     current = current->next;
   }
 }
+
+/**
+ * Função de ordenação da lista de clubes por nome em ordem alfabética.
+ * Implementação com Bubble Sort (ordenação por troca).
+ * A cada iteração, elementos adjacentes são comparados e trocados se necessário.
+ * @param list Ponteiro para a lista de clubes a ser ordenada.
+ */
+void bubble_sort_by_name(TItemList *list) {
+  if (!list) {
+    return;
+  }
+  
+  TItemList *current = list;
+  int swapped;
+  
+  // Loop externo: percorre toda a lista
+  while (current) {
+    swapped = 0;
+    TItemList *next = list;
+    
+    // Loop interno: compara e troca elementos adjacentes
+    while (next && next->next) {
+      // Se o elemento atual é maior que o próximo, troca
+      if (strcmp(next->data->nome, next->next->data->nome) > 0) {
+        swap_item(next, next->next);
+        swapped = 1;
+      }
+      next = next->next;
+    }
+    
+    // Se não houve trocas, lista já está ordenada
+    if (!swapped) {
+      break;
+    }
+    current = current->next;
+  }
+}
+
 
 /**
  * Função para encontrar um item na lista por ID.

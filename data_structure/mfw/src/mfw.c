@@ -1,5 +1,5 @@
 /**
- * mfw(Matriz File of Words) - Module for managing words from a file.
+ * mfw(Matriz from File of Words) - Module for managing words from a file.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +12,7 @@ int parse_file_words(char** words) {
     FILE *_file = NULL;
 
     // Abre o arquivo para leitura    
-    _file = fopen("../mfw/words.txt", "r");
+    _file = fopen("../mfw/words_shuffled.txt", "r");
 
     if (_file == NULL) {
         return 1;
