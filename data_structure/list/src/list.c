@@ -394,3 +394,29 @@ TItemList *new_item_list(int _id, const char *nome, int pontos) {
   return new_item;
 
 }
+
+/**
+ * Função para criar um novo descritor de lista.
+ * @param list Ponteiro para a lista.
+ * @return Ponteiro para o novo descritor de lista.
+ */
+TDescriptorList *create_descriptor_list(TItemList *list) {
+  TDescriptorList *descriptor = (TDescriptorList *)malloc(sizeof(TDescriptorList));
+  if (!descriptor) {
+    perror("malloc failed");
+    return NULL;
+  }
+
+  descriptor->first = list;
+  descriptor->last = NULL;
+  descriptor->size = 0;
+
+  TItemList *current = list;
+  while (current) {
+    descriptor->last = current; // Atualiza o último item
+    descriptor->size++;         // Incrementa o tamanho
+    current = current->next;
+  }
+
+  return descriptor;
+}

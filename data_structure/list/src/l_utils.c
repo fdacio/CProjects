@@ -99,3 +99,15 @@ void print_item_pointer(const TItemList *item) {
   printf("Next....: %p\n", item->next);
   printf("\n");
 }
+
+void print_descriptor(const TDescriptorList *descriptor) {
+  if (!descriptor) {
+    printf("Descriptor is NULL\n");
+    return;
+  }
+
+  printf("Descriptor:\n");
+  printf("First: %p\n", (void *)descriptor->first);
+  printf("Last: %p\n", (void *)descriptor->last);
+  printf("Size: %d\n", descriptor->size);
+}

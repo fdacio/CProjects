@@ -8,5 +8,5 @@ void print_list_pointer(const TItemList *list);
 void print_item(const TItemList *item);
 void print_item_pointer(const TItemList *item);
 void print_sorted_list(const TItemList *list);
-
+void print_descriptor(const TDescriptorList *descriptor);
 #endif 

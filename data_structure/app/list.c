@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
     char *_text_search = argv[1];
 
-    char *sort_method = argc > 2 ? argv[2] : "s"; // Default to selection sort
+    char *sort_method = argc > 2 ? argv[2] : "no_method"; // Default to no method
 
     TItemList *list = NULL;
 
@@ -50,6 +50,13 @@ int main(int argc, char *argv[]) {
         add_start_sing_linked(a, &list);
 
     }
+    printf("Creating descriptor for the list...\n");
+    TDescriptorList *descriptor = create_descriptor_list(list);
+    print_descriptor(descriptor);
+    print_item(descriptor->first);
+    print_item(descriptor->last);
+    free(descriptor); // Free the descriptor memory
+
     unsigned long long _time_start = 0;
     unsigned long long _time_end = 0;
 
@@ -75,6 +82,13 @@ int main(int argc, char *argv[]) {
     } else {
         printf("Item '%s' not found.\n", _text_search);
     }
+
+    printf("Creating descriptor 2 for the list...\n");
+    TDescriptorList *descriptor_2 = create_descriptor_list(list);
+    print_descriptor(descriptor_2);
+    print_item(descriptor_2->first);
+    print_item(descriptor_2->last);
+    free(descriptor_2); // Free the descriptor memory
 
     // Libera a memória alocada
     free_words(words);

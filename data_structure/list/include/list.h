@@ -13,6 +13,12 @@ typedef struct item_list {
   struct item_list *next;
 } TItemList;
 
+typedef struct descritor_list {
+  TItemList *first;
+  TItemList *last;
+  int size;
+} TDescriptorList; 
+
 void add_end_dup_linked(TItemList *new_item, TItemList **list);
 void add_end_sing_linked(TItemList *new_item, TItemList **list);
 void add_start_sing_linked(TItemList *new_item, TItemList **list);
@@ -28,5 +34,6 @@ void remove_item_dup_linked(TItemList *_remove, TItemList **list);
 void free_list(TItemList **list);
 TItemList *new_item_list(int _id, const char *nome, int pontos);
 int get_next_id();
+TDescriptorList *create_descriptor_list(TItemList *list);
 
 #endif
