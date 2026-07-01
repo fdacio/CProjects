@@ -61,6 +61,41 @@ void print_list_pointer(const TItemList *list) {
   printf("\n");
 }
 
+// Imprime uma tabela de ponteiros de itens no console
+void print_head_list_pointer(const TItemList *list, int limit) {
+
+  const TItemList *aux = list;
+
+  printf("Pointer Table -> %p\n", (void *)aux);
+
+  printf("|%-25s|%-15s|%-15s|%-15s|\n", "Clube", "Prev", "Current", "Next");
+  for (int i = 0; i < 75; i++)
+    printf("-");
+  printf("\n");
+
+  int count = 0;
+  while (aux) {
+
+    printf("|%-25s|", aux->data->nome);
+
+    printf("%15p|", (void *)aux->prev);
+
+    printf("%15p|", (void *)aux);
+
+    printf("%15p|\n", (void *)aux->next);
+  
+    printf("\n");
+
+    aux = aux->next;
+    
+    count++;
+    if (count >= limit) {
+      break;
+    }
+  }
+}
+
+
 // Imprime uma nova lista classificada por pontos decrescente
 // Isso para poder manter a orignal
 void print_sorted_list(const TItemList *list) {

@@ -70,9 +70,24 @@ int main(int argc, char *argv[]) {
         bubble_sort_by_name(list);
         _time_end = get_time_microseconds();      
         printf("Time taken bubble sort: %llu microseconds\n", _time_end - _time_start);
+    } else if (strcmp(sort_method, "q") == 0) {
+        printf("Sorting list by name using quick sort:\n");
+        _time_start = get_time_microseconds();
+        quick_sort_by_name(list, 0, descriptor->size - 1);
+        _time_end = get_time_microseconds();      
+        printf("Time taken quick sort: %llu microseconds\n", _time_end - _time_start);
+    } else if (strcmp(sort_method, "m") == 0) {
+        printf("Sorting list by name using merge sort:\n");
+        _time_start = get_time_microseconds();
+        merge_sort_by_name(&list);
+        _time_end = get_time_microseconds();      
+        printf("Time taken merge sort: %llu microseconds\n", _time_end - _time_start);
+    } else if (strcmp(sort_method, "no_method") == 0) {
+        printf("No sorting method specified. Skipping sorting.\n");
     } else {
-        printf("Invalid sorting method specified. Use 's' for selection sort or 'b' for bubble sort.\n");
-    }
+        printf("Invalid sorting method specified. Use 's' for selection sort, 'b' for bubble sort, 'q' for quick sort, or 'm' for merge sort.\n");
+    } 
+    
 
     TItemList *_found = find_item_by_name(_text_search, list);
     if (_found != NULL) {

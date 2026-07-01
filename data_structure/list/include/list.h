@@ -1,7 +1,7 @@
 #ifndef LIST_H
 #define LIST_H
 
-typedef struct club {
+typedef struct {
   int id;
   char nome[25];
   unsigned int pontos;
@@ -13,7 +13,7 @@ typedef struct item_list {
   struct item_list *next;
 } TItemList;
 
-typedef struct descritor_list {
+typedef struct {
   TItemList *first;
   TItemList *last;
   int size;
@@ -22,12 +22,17 @@ typedef struct descritor_list {
 void add_end_dup_linked(TItemList *new_item, TItemList **list);
 void add_end_sing_linked(TItemList *new_item, TItemList **list);
 void add_start_sing_linked(TItemList *new_item, TItemList **list);
+void add_start_dup_linked(TItemList *new_item, TItemList **list);
 void add_sorted_sing_linked(TItemList *new_item, TItemList **list);
 void swap_item(TItemList *target, TItemList *source);
 void selection_sort_by_points(TItemList *list);
 void selection_sort_by_name(TItemList *list);
 void bubble_sort_by_points(TItemList *list);
 void bubble_sort_by_name(TItemList *list);
+void quick_sort_by_points(TItemList *list, int low, int high);  
+void quick_sort_by_name(TItemList *list, int low, int high);  
+void merge_sort_by_points(TItemList **list);
+void merge_sort_by_name(TItemList **list);
 TItemList *find_item(const int id, TItemList *list);
 TItemList *find_item_by_name(const char *nome, TItemList *list);
 void remove_item_sing_linked(int id, TItemList **list);

@@ -1,11 +1,11 @@
 /* Testes para as funções de lista */
 /*** Compile and build: gcc test.c src/list.c src/l_utils.c -Iinclude -o build/test  ****/
 /*** Execute: ./build/test ****/
-#include "l_utils.h"
-#include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "l_utils.h"
+#include "list.h"
 
 // Macro auxiliar para exibir resultado
 #define TEST(nome, condicao)                                                   \
@@ -67,6 +67,51 @@ void test_add_end_dup_linked() {
   add_end_dup_linked(b, &list);
 
   TEST("primeiro prev é NULL", list->prev == NULL);
+  TEST("segundo prev aponta para primeiro", list->next->prev == list);
+  TEST("segundo next é NULL", list->next->next == NULL);
+
+  print_list_pointer(list);
+  free_list(&list);
+}
+
+void test_add_start_sing_linked() {
+  printf("\n--- add_start_sing_linked ---\n");
+
+  TItemList *list = NULL;
+  TItemList *a = new_item_list(1, "Vasco da Gama", 10);
+  TItemList *b = new_item_list(2, "Palmeiras", 20);
+
+  add_start_sing_linked(a, &list);
+  TEST("primeiro elemento é Vasco da Gama",
+       strcmp(list->data->nome, "Vasco da Gama") == 0);
+
+  add_start_sing_linked(b, &list);
+  TEST("primeiro elemento agora é Palmeiras",
+       strcmp(list->data->nome, "Palmeiras") == 0);
+  TEST("segundo elemento é Vasco da Gama",
+       strcmp(list->next->data->nome, "Vasco da Gama") == 0);
+  TEST("segundo next é NULL", list->next->next == NULL);
+
+  print_list_pointer(list);
+  free_list(&list);
+}
+
+void test_add_start_dup_linked() {
+  printf("\n--- add_start_dup_linked ---\n");
+
+  TItemList *list = NULL;
+  TItemList *a = new_item_list(1, "Vasco da Gama", 10);
+  TItemList *b = new_item_list(2, "Palmeiras", 20);
+
+  add_start_dup_linked(a, &list);
+  TEST("primeiro elemento é Vasco da Gama",
+       strcmp(list->data->nome, "Vasco da Gama") == 0);
+
+  add_start_dup_linked(b, &list);
+  TEST("primeiro elemento agora é Palmeiras",
+       strcmp(list->data->nome, "Palmeiras") == 0);
+  TEST("segundo elemento é Vasco da Gama",
+       strcmp(list->next->data->nome, "Vasco da Gama") == 0);
   TEST("segundo prev aponta para primeiro", list->next->prev == list);
   TEST("segundo next é NULL", list->next->next == NULL);
 
@@ -170,7 +215,7 @@ void test_sort_list() {
   add_end_sing_linked(new_item_list(2, "Palmeiras", 30), &list);
   add_end_sing_linked(new_item_list(3, "Sao Paulo", 20), &list);
 
-  sort_list_by_points(list);
+  quick_sort_by_points(list, 0, 2);
 
   TEST("1º lugar: Palmeiras (30pts)",
        strcmp(list->data->nome, "Palmeiras") == 0);
@@ -261,6 +306,29 @@ void test_find_by_name() {
   free_list(&list);
 }
 
+void test_swap_item() {
+  printf("\n--- swap_item ---\n");
+  TItemList *list = NULL;
+  add_end_sing_linked(new_item_list(1, "Vasco da Gama", 10), &list);
+  add_end_sing_linked(new_item_list(2, "Palmeiras", 20), &list);
+  add_end_sing_linked(new_item_list(3, "Sao Paulo", 15), &list);
+
+  print_list(list);
+
+  TItemList *item1 = find_item(1, list);
+  TItemList *item2 = find_item(2, list);
+
+  swap_item(item1, item2);
+
+  TEST("Vasco da Gama agora tem ID de Palmeiras",
+       item1->data->id == 2 && strcmp(item1->data->nome, "Palmeiras") == 0);
+  TEST("Palmeiras agora tem ID de Vasco da Gama",
+       item2->data->id == 1 && strcmp(item2->data->nome, "Vasco da Gama") == 0);
+
+  print_list(list);
+  free_list(&list);
+}
+
 int main() {
   printf("\n=============================\n");
   printf("TESTES - list.c");
@@ -269,15 +337,17 @@ int main() {
   test_new_item();
   test_add_end_sing_linked();
   test_add_end_dup_linked();
+  test_add_start_sing_linked();
+  test_add_start_dup_linked();
   test_add_sorted_sing_linked();
   test_find_item();
   test_find_by_name();
+  test_swap_item();
   test_sort_list();
-  test_free_list();
   test_remove_item_sing_linked_meio_lista();
   test_remove_item_sing_linked_primeiro_elemento();
   test_remove_item_sing_linked_ultimo_elemento();
-
+  test_free_list();
 
   printf("\n=============================\n");
   printf("FIM DOS TESTES - list.c");
