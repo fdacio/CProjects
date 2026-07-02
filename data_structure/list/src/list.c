@@ -64,6 +64,11 @@ void add_start_sing_linked(TItemList *new_item, TItemList **list) {
   *list = new_item;
 }
 
+/**
+ * Função para adicionar um item no inicio em uma lista duplamente encadeada
+ * @param new_item Ponteiro para o item a ser adicionado
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
+ */
 void add_start_dup_linked(TItemList *new_item, TItemList **list) {
   if (!*list) { // if the list is empty, add the first item and return
     *list = new_item;
@@ -124,39 +129,13 @@ void swap_item(TItemList *_item1, TItemList *_item2) {
 }
 
 /**
- * Função de ordenação da lista de clubes por pontos decrescente.
- * Função de ordenação simples, baseado no algoritmo de seleção.
- * A cada iteração, o item com maior pontuação é selecionado e colocado na posição correta.
- * @param list Ponteiro para a lista de clubes a ser ordenada.
- */
-void selection_sort_by_points(TItemList *list) {
-  if (!list) {
-    return;
-  }
-  TItemList *current = list;
-  while (current) {
-    TItemList *max_current = current;
-    TItemList *next = current->next;
-    while (next) {
-      if (next->data->pontos > max_current->data->pontos) {
-        max_current = next;
-      }
-      next = next->next;
-    }
-    if (max_current != current) {
-      swap_item(current, max_current);
-    }
-    current = current->next;
-  }
-}
-
-/**
  * Função de ordenação da lista de clubes por nome em ordem alfabética.
  * Função de ordenação simples, baseado no algoritmo de seleção.
  * A cada iteração, o item com menor nome é selecionado e colocado na posição correta.
  * @param list Ponteiro para a lista de clubes a ser ordenada.
- */ 
-void selection_sort_by_name(TItemList *list) {
+ * @param compare Função de comparação para determinar a ordem dos elementos.
+ */
+void selection_sort(TItemList *list, int (*compare)(TClub *, TClub *)) {
   if (!list) {
     return;
   }
@@ -165,7 +144,7 @@ void selection_sort_by_name(TItemList *list) {
     TItemList *max_current = current;
     TItemList *next = current->next;
     while (next) {
-      if (strcmp(next->data->nome, max_current->data->nome) < 0) {
+      if (compare(next->data, max_current->data) < 0) {
         max_current = next;
       }
       next = next->next;
@@ -178,49 +157,13 @@ void selection_sort_by_name(TItemList *list) {
 }
 
 /**
- * Função de ordenação da lista de clubes por pontos decrescente.
- * Implementação com Bubble Sort (ordenação por troca).
- * A cada iteração, elementos adjacentes são comparados e trocados se necessário.
- * @param list Ponteiro para a lista de clubes a ser ordenada.
- */
-void bubble_sort_by_points(TItemList *list) {
-  if (!list) {
-    return;
-  }
-  
-  TItemList *current = list;
-  int swapped;
-  
-  // Loop externo: percorre toda a lista
-  while (current) {
-    swapped = 0;
-    TItemList *next = list;
-    
-    // Loop interno: compara e troca elementos adjacentes
-    while (next && next->next) {
-      // Se o elemento atual é menor que o próximo, troca
-      if (next->data->pontos < next->next->data->pontos) {
-        swap_item(next, next->next);
-        swapped = 1;
-      }
-      next = next->next;
-    }
-    
-    // Se não houve trocas, lista já está ordenada
-    if (!swapped) {
-      break;
-    }
-    current = current->next;
-  }
-}
-
-/**
  * Função de ordenação da lista de clubes por nome em ordem alfabética.
  * Implementação com Bubble Sort (ordenação por troca).
  * A cada iteração, elementos adjacentes são comparados e trocados se necessário.
  * @param list Ponteiro para a lista de clubes a ser ordenada.
+ * @param compare Função de comparação para determinar a ordem dos elementos.
  */
-void bubble_sort_by_name(TItemList *list) {
+void bubble_sort(TItemList *list, int (*compare)(TClub *, TClub *)) {
   if (!list) {
     return;
   }
@@ -236,7 +179,7 @@ void bubble_sort_by_name(TItemList *list) {
     // Loop interno: compara e troca elementos adjacentes
     while (next && next->next) {
       // Se o elemento atual é maior que o próximo, troca
-      if (strcmp(next->data->nome, next->next->data->nome) > 0) {
+      if (compare(next->data, next->next->data) > 0) {
         swap_item(next, next->next);
         swapped = 1;
       }
@@ -251,62 +194,18 @@ void bubble_sort_by_name(TItemList *list) {
   }
 }
 
-
 /**
  * Função auxiliar para obter o item na posição idx da lista.
  * @param idx Índice do item a ser obtido (0-based).
  * @param list Ponteiro para a lista.
  * @return Ponteiro para o item na posição especificada ou NULL se não encontrado.
  */
-TItemList *quick_sort_item(const int idx, TItemList *list) {
+TItemList *find_item_by_index(const int idx, TItemList *list) {
   TItemList *item = list;
   for (int i = 0; i < idx; i++) {
     item = item->next;
   }
   return item;
-}
-
-/**
- * Função de ordenação da lista de clubes por pontos decrescente.
- * Implementação com Quick Sort (ordenação por partição).
- * A cada iteração, a lista é particionada em torno de um pivô, e os elementos são rearranjados.
- * @param list Ponteiro para a lista de clubes a ser ordenada.
- * @param low Índice do primeiro elemento da sublista a ser ordenada.
- * @param high Índice do último elemento da sublista a ser ordenada.
- */
-void quick_sort_by_points(TItemList *list, int low, int high) {
-  register int i, j;
-  TItemList *pivot, *i_pivot, *j_pivot;
-
-  i = low;
-  j = high;
-  pivot = quick_sort_item((low+high)/2, list);
-  i_pivot = quick_sort_item(i, list);
-  j_pivot = quick_sort_item(j, list);
-
-  do {
-    while ((i_pivot->data->pontos < pivot->data->pontos) && (i < high)) {
-      i++;
-      i_pivot = quick_sort_item(i, list);
-    }
-    while ((j_pivot->data->pontos > pivot->data->pontos) && (j > low)) {
-      j--;
-      j_pivot = quick_sort_item(j, list);
-    }
-    if (i <= j) {
-      swap_item(i_pivot, j_pivot);
-      i++;
-      j--;
-    }
-  } while (i <= j);
-  
-  if (low < j) {
-    quick_sort_by_points(list, low, j);
-  }
-
-  if (i < high) {
-    quick_sort_by_points(list, i, high);
-  }
 }
 
 /**
@@ -316,26 +215,27 @@ void quick_sort_by_points(TItemList *list, int low, int high) {
  * @param list Ponteiro para a lista de clubes a ser ordenada.
  * @param low Índice do primeiro elemento da sublista a ser ordenada.
  * @param high Índice do último elemento da sublista a ser ordenada.
+ * @param compare Função de comparação para determinar a ordem dos elementos.
  */
-void quick_sort_by_name(TItemList *list, int low, int high) {
+void quick_sort(TItemList *list, int low, int high, int (*compare)(TClub *, TClub *)) {
 
   register int i, j;
   TItemList *pivot, *i_pivot, *j_pivot;
 
   i = low;
   j = high;
-  pivot = quick_sort_item((low+high)/2, list);
-  i_pivot = quick_sort_item(i, list);
-  j_pivot = quick_sort_item(j, list);
+  pivot = find_item_by_index((low+high)/2, list);
+  i_pivot = find_item_by_index(i, list);
+  j_pivot = find_item_by_index(j, list);
 
   do {
-    while ((strcmp(i_pivot->data->nome, pivot->data->nome) < 0) && (i < high)) {
+    while (compare(i_pivot->data, pivot->data) < 0 && (i < high)) {
       i++;
-      i_pivot = quick_sort_item(i, list);
+      i_pivot = find_item_by_index(i, list);
     }
-    while ((strcmp(j_pivot->data->nome, pivot->data->nome) > 0) && (j > low)) {
+    while (compare(j_pivot->data, pivot->data) > 0 && (j > low)) {
       j--;
-      j_pivot = quick_sort_item(j, list);
+      j_pivot = find_item_by_index(j, list);
     }
     if (i <= j) {
       swap_item(i_pivot, j_pivot);
@@ -345,93 +245,46 @@ void quick_sort_by_name(TItemList *list, int low, int high) {
   } while (i <= j);
   
   if (low < j) {
-    quick_sort_by_name(list, low, j);
+    quick_sort(list, low, j, compare);
   }
 
   if (i < high) {
-    quick_sort_by_name(list, i, high);
+    quick_sort(list, i, high, compare);
   }
 
 }
 
 /**
- * Função auxiliar para dividir a lista em duas metades.
- * @param source Ponteiro para a lista a ser dividida.
- * @param left Ponteiro para o ponteiro da lista esquerda (passagem por referência (**)).
- * @param right Ponteiro para o ponteiro da lista direita (passagem por referência (**
+ * Função auxiliar para mesclar duas listas ordenadas em uma única lista ordenada.
+ * @param left Ponteiro para a primeira lista ordenada.
+ * @param right Ponteiro para a segunda lista ordenada.
+ * @param compare Função de comparação para determinar a ordem dos elementos.
+ * @return Ponteiro para a lista mesclada e ordenada.
  */
-void split_list(TItemList *source, TItemList **left, TItemList **right) {
-  if (!source || !left || !right) {
-    return;
-  }
-
-  TItemList *slow = source;
-  TItemList *fast = source->next;
-
-  while (fast) {
-    fast = fast->next;
-    if (fast) {
-      slow = slow->next;
-      fast = fast->next;
-    }
-  }
-
-  *left = source;
-  *right = slow->next;
-  slow->next = NULL; // Split the list into two halves
-}
-
-TItemList *merge_lists_by_points(TItemList *left, TItemList *right) {
+TItemList *merge_lists(TItemList *left, TItemList *right, int (*compare)(TClub *, TClub *)) {
   if (!left) return right;
   if (!right) return left;
 
   TItemList *result = NULL;
 
-  if (left->data->pontos >= right->data->pontos) {
+  if (compare(left->data, right->data) <= 0) {
     result = left;
-    result->next = merge_lists_by_points(left->next, right);
+    result->next = merge_lists(left->next, right, compare);
   } else {
     result = right;
-    result->next = merge_lists_by_points(left, right->next);
+    result->next = merge_lists(left, right->next, compare);
   }
 
   return result;
 }
 
-TItemList *merge_lists_by_name(TItemList *left, TItemList *right) {
-  if (!left) return right;
-  if (!right) return left;
-
-  TItemList *result = NULL;
-
-  if (strcmp(left->data->nome, right->data->nome) <= 0) {
-    result = left;
-    result->next = merge_lists_by_name(left->next, right);
-  } else {
-    result = right;
-    result->next = merge_lists_by_name(left, right->next);
-  }
-
-  return result;
-}
-
-void merge_sort_by_points(TItemList **list) {
-  TItemList *head = *list;
-  TItemList *left = NULL;
-  TItemList *right = NULL;
-
-  if(!head || !head->next) {
-    return; // Base case: 0 or 1 element
-  }
-
-  split_list(head, &left, &right);
-  merge_sort_by_points(&left);
-  merge_sort_by_points(&right);
-  *list = merge_lists_by_points(left, right); 
-
-}
-
-void merge_sort_by_name(TItemList **list) {
+/**
+ * Função de ordenação da lista de clubes usando Merge Sort.
+ * A cada iteração, a lista é dividida em duas metades, ordenadas recursivamente e mescladas.
+ * @param list Ponteiro para o ponteiro da lista de clubes a ser ordenada (passagem por referência (**) para refletir modificação na variável global da lista)
+ * @param compare Função de comparação para determinar a ordem dos elementos.
+ */
+void merge_sort(TItemList **list, int (*compare)(TClub *, TClub *)) {
   TItemList *head = *list;
   TItemList *left = NULL;
   TItemList *right = NULL;
@@ -442,12 +295,11 @@ void merge_sort_by_name(TItemList **list) {
 
   split_list(head, &left, &right);
 
-  merge_sort_by_name(&left);
-  merge_sort_by_name(&right);
-  
-  *list = merge_lists_by_name(left, right); // Update the original list pointer
-}
+  merge_sort(&left, compare);
+  merge_sort(&right, compare);
 
+  *list = merge_lists(left, right, compare); // Update the original list pointer
+}
 
 /**
  * Função para encontrar um item na lista por ID.

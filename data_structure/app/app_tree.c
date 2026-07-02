@@ -1,5 +1,5 @@
 /**
- * gcc tree.c ..\tree\src\tree.c ..\tree\src\t_utils.c ..\mfw\src\mfw.c -I..\tree\include -I..\mfw\include -o .\build\tree.exe; .\build\tree.exe
+ * gcc app_tree.c ..\tree\src\tree.c ..\tree\src\t_utils.c ..\mfw\src\mfw.c -I..\tree\include -I..\mfw\include -o .\build\app_tree.exe; .\build\app_tree.exe
  */
 #include <stdio.h>
 #include <stdlib.h>

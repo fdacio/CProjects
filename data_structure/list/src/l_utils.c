@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Imprime uma tabela de itemes no console
+/**
+ * Função para imprimir no console os detalhes de uma lista de clubes.
+ * @param list Ponteiro para a lista de clubes a ser impressa.
+ */
 void print_list(const TItemList *list) {
   if (!list) {
     return;
@@ -13,7 +16,7 @@ void print_list(const TItemList *list) {
   printf("Pointer Table -> %p\n", (void *)aux);
 
   printf("|%-6s|%-6s|%-25s|%-8s|\n", "#", "ID", "Clube", "Pontos");
-  for (int i = 0; i < 44; i++)
+  for (int i = 0; i < 50; i++)
     printf("-");
   printf("\n");
   
@@ -34,15 +37,18 @@ void print_list(const TItemList *list) {
   printf("\n");
 }
 
-// Imprime uma tabela de ponteiros de itens no console
+/**
+ * Função para imprimir no console os detalhes de uma lista de clubes.
+ * @param list Ponteiro para a lista de clubes a ser impressa.
+ */
 void print_list_pointer(const TItemList *list) {
 
   const TItemList *aux = list;
 
   printf("Pointer Table -> %p\n", (void *)aux);
 
-  printf("|%-25s|%-15s|%-15s|%-15s|\n", "Clube", "Prev", "Current", "Next");
-  for (int i = 0; i < 75; i++)
+  printf("|%-25s|%-20s|%-20s|%-20s|\n", "Clube", "Prev", "Current", "Next");
+  for (int i = 0; i < 90; i++)
     printf("-");
   printf("\n");
 
@@ -50,26 +56,29 @@ void print_list_pointer(const TItemList *list) {
 
     printf("|%-25s|", aux->data->nome);
 
-    printf("%15p|", (void *)aux->prev);
+    printf("%20p|", (void *)aux->prev);
 
-    printf("%15p|", (void *)aux);
+    printf("%20p|", (void *)aux);
 
-    printf("%15p|\n", (void *)aux->next);
+    printf("%20p|\n", (void *)aux->next);
 
     aux = aux->next;
   }
   printf("\n");
 }
 
-// Imprime uma tabela de ponteiros de itens no console
+/**
+ * Função para imprimir no console os detalhes de uma lista de clubes até um limite especificado.
+ * @param list Ponteiro para a lista de clubes a ser impressa.
+ */
 void print_head_list_pointer(const TItemList *list, int limit) {
 
   const TItemList *aux = list;
 
   printf("Pointer Table -> %p\n", (void *)aux);
 
-  printf("|%-25s|%-15s|%-15s|%-15s|\n", "Clube", "Prev", "Current", "Next");
-  for (int i = 0; i < 75; i++)
+  printf("|%-25s|%-20s|%-20s|%-20s|\n", "Clube", "Prev", "Current", "Next");
+  for (int i = 0; i < 90; i++)
     printf("-");
   printf("\n");
 
@@ -78,11 +87,11 @@ void print_head_list_pointer(const TItemList *list, int limit) {
 
     printf("|%-25s|", aux->data->nome);
 
-    printf("%15p|", (void *)aux->prev);
+    printf("%20p|", (void *)aux->prev);
 
-    printf("%15p|", (void *)aux);
+    printf("%20p|", (void *)aux);
 
-    printf("%15p|\n", (void *)aux->next);
+    printf("%20p|\n", (void *)aux->next);
   
     printf("\n");
 
@@ -95,9 +104,11 @@ void print_head_list_pointer(const TItemList *list, int limit) {
   }
 }
 
-
-// Imprime uma nova lista classificada por pontos decrescente
-// Isso para poder manter a orignal
+/**
+ * Função para imprimir uma nova lista ordenada por pontos decrescentes.
+ * A lista original não é modificada.
+ * @param list Ponteiro para a lista de clubes a ser ordenada e impressa.
+ */
 void print_sorted_list(const TItemList *list) {
   if (!list) {
     return;
@@ -113,7 +124,10 @@ void print_sorted_list(const TItemList *list) {
   free_list(&sorted_list);
 }
 
-// Imprime um item no console
+/**
+ * Função para imprimir no console os detalhes de um item na lista.
+ * @param item Ponteiro para o item a ser impresso.
+ */
 void print_item(const TItemList *item) {
   if (!item)
     return;
@@ -123,7 +137,10 @@ void print_item(const TItemList *item) {
   printf("\n");
 }
 
-// Imprime os ponteiros do item no console
+/**
+ * Função para imprimir no console os ponteiros de um item na lista.
+ * @param item Ponteiro para o item a ser impresso.
+ */
 void print_item_pointer(const TItemList *item) {
   if (!item) {
     printf("nil");
@@ -135,6 +152,10 @@ void print_item_pointer(const TItemList *item) {
   printf("\n");
 }
 
+/**
+ * Função para imprimir no console os detalhes do descritor da lista.
+ * @param descriptor Ponteiro para o descritor da lista.
+ */
 void print_descriptor(const TDescriptorList *descriptor) {
   if (!descriptor) {
     printf("Descriptor is NULL\n");
@@ -145,4 +166,32 @@ void print_descriptor(const TDescriptorList *descriptor) {
   printf("First: %s\n", descriptor->first->data->nome);
   printf("Last:  %s\n", descriptor->last->data->nome);
   printf("Size:  %d\n", descriptor->size);
+}
+
+/**
+ * Função auxiliar para dividir a lista em duas metades.
+ * @param source Ponteiro para a lista a ser dividida.
+ * @param left Ponteiro para o ponteiro da lista esquerda (passagem por referência (**)).
+ * @param right Ponteiro para o ponteiro da lista direita (passagem por referência (**
+ */
+void split_list(TItemList *source, TItemList **left, TItemList **right) {
+  
+  if (!source || !left || !right) {
+    return;
+  }
+
+  TItemList *slow = source;
+  TItemList *fast = source->next;
+
+  while (fast) {
+    fast = fast->next;
+    if (fast) {
+      slow = slow->next;
+      fast = fast->next;
+    }
+  }
+
+  *left = source;
+  *right = slow->next;
+  slow->next = NULL; // Split the list into two halves
 }

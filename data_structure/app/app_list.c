@@ -1,5 +1,5 @@
 /**
- * gcc list.c ..\list\src\list.c ..\list\src\l_utils.c ..\mfw\src\mfw.c -I..\list\include -I..\mfw\include -o .\build\list.exe; .\build\list.exe
+ * gcc app_list.c ..\list\src\list.c ..\list\src\l_utils.c ..\mfw\src\mfw.c -I..\list\include -I..\mfw\include -o .\build\app_list.exe; .\build\app_list.exe
  */
 #include <stdio.h>
 #include <stdlib.h>
