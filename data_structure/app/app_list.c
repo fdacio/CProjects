@@ -73,25 +73,31 @@ int main(int argc, char *argv[])
     else if (strcmp(sort_method, "b") == 0)
     {
         printf("Sorting list by name using bubble sort:\n");
+
         _time_start = get_time_microseconds();
         bubble_sort(list, compare_name);
         _time_end = get_time_microseconds();
+
         printf("Time taken bubble sort: %llu microseconds\n", _time_end - _time_start);
     }
     else if (strcmp(sort_method, "q") == 0)
     {
         printf("Sorting list by name using quick sort:\n");
+
         _time_start = get_time_microseconds();
         quick_sort(list, 0, descriptor->size - 1, compare_name);
         _time_end = get_time_microseconds();
+
         printf("Time taken quick sort: %llu microseconds\n", _time_end - _time_start);
     }
     else if (strcmp(sort_method, "m") == 0)
     {
         printf("Sorting list by name using merge sort:\n");
+
         _time_start = get_time_microseconds();
         merge_sort(&list, compare_name);
         _time_end = get_time_microseconds();
+
         printf("Time taken merge sort: %llu microseconds\n", _time_end - _time_start);
     }
     else if (strcmp(sort_method, "no_method") == 0)

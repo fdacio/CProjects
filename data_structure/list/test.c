@@ -8,12 +8,12 @@
 #include "list.h"
 
 // Macro auxiliar para exibir resultado
-#define TEST(nome, condicao)                  \
-     do                                       \
-     {                                        \
-          if (condicao)                       \
+#define TEST(nome, condicao)                    \
+     do                                         \
+     {                                          \
+          if (condicao)                         \
                printf("[ok PASS]: %s\n", nome); \
-          else                                \
+          else                                  \
                printf("[xx FAIL]: %s\n", nome); \
      } while (0)
 
@@ -507,22 +507,22 @@ void test_merge_sort_already_sorted()
 
      merge_sort(&list, compare_points);
 
-      TEST("List already sorted by points remains unchanged",
-            list != NULL && strcmp(list->data->nome, "Vasco da Gama") == 0 &&
-                 list->next != NULL &&
-                 strcmp(list->next->data->nome, "Ceara") == 0 &&
-                 list->next->next != NULL &&
-                 strcmp(list->next->next->data->nome, "Fluminense") == 0 &&
-                 list->next->next->next != NULL &&
-                 strcmp(list->next->next->next->data->nome, "Cruzeiro") == 0 &&
-                 list->next->next->next->next != NULL &&
-                 strcmp(list->next->next->next->next->data->nome, "Palmeiras") ==
-                      0 &&
-                 list->next->next->next->next->next != NULL &&
-                 strcmp(list->next->next->next->next->next->data->nome,
-                          "Sao Paulo") == 0);
+     TEST("List already sorted by points remains unchanged",
+          list != NULL && strcmp(list->data->nome, "Vasco da Gama") == 0 &&
+              list->next != NULL &&
+              strcmp(list->next->data->nome, "Ceara") == 0 &&
+              list->next->next != NULL &&
+              strcmp(list->next->next->data->nome, "Fluminense") == 0 &&
+              list->next->next->next != NULL &&
+              strcmp(list->next->next->next->data->nome, "Cruzeiro") == 0 &&
+              list->next->next->next->next != NULL &&
+              strcmp(list->next->next->next->next->data->nome, "Palmeiras") ==
+                  0 &&
+              list->next->next->next->next->next != NULL &&
+              strcmp(list->next->next->next->next->next->data->nome,
+                     "Sao Paulo") == 0);
      print_list(list);
-     free_list(&list);                     
+     free_list(&list);
 }
 
 void test_selection_sort_by_points()
@@ -634,17 +634,17 @@ void test_selection_sort_already_sorted()
 
      selection_sort(list, compare_points);
 
-      TEST("List already sorted by points remains unchanged",
-            list != NULL && strcmp(list->data->nome, "Vasco da Gama") == 0 &&
-                 list->next != NULL &&
-                 strcmp(list->next->data->nome, "Ceara") == 0 &&
-                 list->next->next != NULL &&
-                 strcmp(list->next->next->data->nome, "Fluminense") == 0 &&
-                 list->next->next->next != NULL &&
-                 strcmp(list->next->next->next->data->nome, "Cruzeiro") == 0 &&
-                 list->next->next->next->next != NULL &&
-                 strcmp(list->next->next->next->next->data->nome, "Palmeiras") ==
-                      0);
+     TEST("List already sorted by points remains unchanged",
+          list != NULL && strcmp(list->data->nome, "Vasco da Gama") == 0 &&
+              list->next != NULL &&
+              strcmp(list->next->data->nome, "Ceara") == 0 &&
+              list->next->next != NULL &&
+              strcmp(list->next->next->data->nome, "Fluminense") == 0 &&
+              list->next->next->next != NULL &&
+              strcmp(list->next->next->next->data->nome, "Cruzeiro") == 0 &&
+              list->next->next->next->next != NULL &&
+              strcmp(list->next->next->next->next->data->nome, "Palmeiras") ==
+                  0);
 
      print_list(list);
      free_list(&list);

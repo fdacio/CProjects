@@ -317,7 +317,7 @@ TItemList *merge_lists(TItemList *left, TItemList *right, int (*compare)(TClub *
 }
 
 /**
- * Função de ordenação da lista de clubes usando Merge Sort.
+ * Função de ordenação da lista de clubes usando Merge Sort. (Método mais eficiente para listas encadeadas)
  * A cada iteração, a lista é dividida em duas metades, ordenadas recursivamente e mescladas.
  * @param list Ponteiro para o ponteiro da lista de clubes a ser ordenada (passagem por referência (**) para refletir modificação na variável global da lista)
  * @param compare Função de comparação para determinar a ordem dos elementos.
