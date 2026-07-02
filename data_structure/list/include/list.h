@@ -29,6 +29,8 @@ void selection_sort(TItemList *list, int (*compare)(TClub *, TClub *));
 void bubble_sort(TItemList *list, int (*compare)(TClub *, TClub *));
 void quick_sort(TItemList *list, int low, int high, int (*compare)(TClub *, TClub *));
 void merge_sort(TItemList **list, int (*compare)(TClub *, TClub *));
+int compare_name(TClub *a, TClub *b);
+int compare_points(TClub *a, TClub *b);
 TItemList *find_item(const int id, TItemList *list);
 TItemList *find_item_by_name(const char *nome, TItemList *list);
 void remove_item_sing_linked(int id, TItemList **list);

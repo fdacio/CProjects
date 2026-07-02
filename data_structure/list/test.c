@@ -356,16 +356,6 @@ void test_split_list()
      free_list(&right);
 }
 
-int compare_name(TClub *a, TClub *b)
-{
-     return strcmp(a->nome, b->nome);
-}
-
-int compare_points(TClub *a, TClub *b)
-{
-     return b->pontos - a->pontos;
-}
-
 void test_merge_sort_by_name()
 {
      printf("\n--- merge_sort_by_name ---\n");

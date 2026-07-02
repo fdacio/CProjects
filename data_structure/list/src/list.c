@@ -208,6 +208,16 @@ TItemList *find_item_by_index(const int idx, TItemList *list) {
   return item;
 }
 
+int compare_name(TClub *a, TClub *b)
+{
+     return strcmp(a->nome, b->nome);
+}
+
+int compare_points(TClub *a, TClub *b)
+{
+     return b->pontos - a->pontos;
+}
+
 /**
  * Função de ordenação da lista de clubes por nome em ordem alfabética.
  * Implementação com Quick Sort (ordenação por partição).
@@ -252,6 +262,34 @@ void quick_sort(TItemList *list, int low, int high, int (*compare)(TClub *, TClu
     quick_sort(list, i, high, compare);
   }
 
+}
+
+/**
+ * Função auxiliar para dividir a lista em duas metades.
+ * @param source Ponteiro para a lista a ser dividida.
+ * @param left Ponteiro para o ponteiro da lista esquerda (passagem por referência (**)).
+ * @param right Ponteiro para o ponteiro da lista direita (passagem por referência (**
+ */
+void split_list(TItemList *source, TItemList **left, TItemList **right) {
+  
+  if (!source || !left || !right) {
+    return;
+  }
+
+  TItemList *slow = source;
+  TItemList *fast = source->next;
+
+  while (fast) {
+    fast = fast->next;
+    if (fast) {
+      slow = slow->next;
+      fast = fast->next;
+    }
+  }
+
+  *left = source;
+  *right = slow->next;
+  slow->next = NULL; // Split the list into two halves
 }
 
 /**

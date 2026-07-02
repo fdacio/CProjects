@@ -168,30 +168,3 @@ void print_descriptor(const TDescriptorList *descriptor) {
   printf("Size:  %d\n", descriptor->size);
 }
 
-/**
- * Função auxiliar para dividir a lista em duas metades.
- * @param source Ponteiro para a lista a ser dividida.
- * @param left Ponteiro para o ponteiro da lista esquerda (passagem por referência (**)).
- * @param right Ponteiro para o ponteiro da lista direita (passagem por referência (**
- */
-void split_list(TItemList *source, TItemList **left, TItemList **right) {
-  
-  if (!source || !left || !right) {
-    return;
-  }
-
-  TItemList *slow = source;
-  TItemList *fast = source->next;
-
-  while (fast) {
-    fast = fast->next;
-    if (fast) {
-      slow = slow->next;
-      fast = fast->next;
-    }
-  }
-
-  *left = source;
-  *right = slow->next;
-  slow->next = NULL; // Split the list into two halves
-}
