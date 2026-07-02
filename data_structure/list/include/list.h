@@ -25,6 +25,7 @@ void add_start_sing_linked(TItemList *new_item, TItemList **list);
 void add_start_dup_linked(TItemList *new_item, TItemList **list);
 void add_sorted_sing_linked(TItemList *new_item, TItemList **list);
 void swap_item(TItemList *target, TItemList *source);
+void split_list(TItemList *list, TItemList **left, TItemList **right);
 void selection_sort(TItemList *list, int (*compare)(TClub *, TClub *));
 void bubble_sort(TItemList *list, int (*compare)(TClub *, TClub *));
 void quick_sort(TItemList *list, int low, int high, int (*compare)(TClub *, TClub *));

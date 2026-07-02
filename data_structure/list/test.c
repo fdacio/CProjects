@@ -215,31 +215,6 @@ void test_remove_item_sing_linked_ultimo_elemento()
      free_list(&list);
 }
 
-void test_free_list()
-{
-     printf("\n--- free_list ---\n");
-
-     // caso 1: lista com vários elementos
-     TItemList *list = NULL;
-     add_end_sing_linked(new_item_list(1, "Vasco da Gama", 10), &list);
-     add_end_sing_linked(new_item_list(2, "Palmeiras", 20), &list);
-     add_end_sing_linked(new_item_list(3, "Sao Paulo", 15), &list);
-     free_list(&list);
-     TEST("list with 3 elements freed without crash", 1); // if reached here, no crash
-     print_list(list);
-
-     // caso 2: lista com um elemento
-     TItemList *list2 = NULL;
-     add_end_sing_linked(new_item_list(1, "Vasco da Gama", 10), &list2);
-     free_list(&list2);
-     TEST("list with 1 element freed without crash", 1);
-
-     // caso 3: lista vazia (NULL)
-     TItemList *list3 = NULL;
-     free_list(&list3);
-     TEST("NULL list does not cause crash", 1);
-}
-
 void test_find_item()
 {
      printf("\n--- find_item ---\n");
@@ -325,32 +300,34 @@ void test_split_list()
 {
      printf("\n--- split_list ---\n");
      TItemList *list = NULL;
-     add_end_sing_linked(new_item_list(1, "Vasco da Gama", 26), &list);
-     add_end_sing_linked(new_item_list(2, "Palmeiras", 20), &list);
-     add_end_sing_linked(new_item_list(3, "Sao Paulo", 15), &list);
-     add_end_sing_linked(new_item_list(4, "Botafogo", 25), &list);
-     add_end_sing_linked(new_item_list(5, "Ceara", 24), &list);
-     add_end_sing_linked(new_item_list(6, "Fortaleza", 12), &list);
-     add_end_sing_linked(new_item_list(7, "Flamengo", 11), &list);
-     add_end_sing_linked(new_item_list(8, "Fluminense", 15), &list);
-     add_end_sing_linked(new_item_list(9, "Santos", 16), &list);
-     add_end_sing_linked(new_item_list(10, "Corinthians", 11), &list);
-     add_end_sing_linked(new_item_list(11, "Cruzeiro", 23), &list);
-     add_end_sing_linked(new_item_list(12, "Coritiba", 18), &list);
-     add_end_sing_linked(new_item_list(13, "Internacional", 19), &list);
+     add_end_dup_linked(new_item_list(1, "Vasco da Gama", 26), &list);
+     add_end_dup_linked(new_item_list(2, "Palmeiras", 20), &list);
+     add_end_dup_linked(new_item_list(3, "Sao Paulo", 15), &list);
+     add_end_dup_linked(new_item_list(4, "Botafogo", 25), &list);
+     add_end_dup_linked(new_item_list(5, "Ceara", 24), &list);
+     add_end_dup_linked(new_item_list(6, "Fortaleza", 12), &list);
+     add_end_dup_linked(new_item_list(7, "Flamengo", 11), &list);
+     add_end_dup_linked(new_item_list(8, "Fluminense", 15), &list);
+     add_end_dup_linked(new_item_list(9, "Santos", 16), &list);
+     add_end_dup_linked(new_item_list(10, "Corinthians", 11), &list);
+     add_end_dup_linked(new_item_list(11, "Cruzeiro", 23), &list);
+     add_end_dup_linked(new_item_list(12, "Coritiba", 18), &list);
+     add_end_dup_linked(new_item_list(13, "Internacional", 19), &list);
 
      TItemList *left = NULL;
      TItemList *right = NULL;
+     
+     print_list_pointer(list);
 
      split_list(list, &left, &right);
+
+     print_list_pointer(left);
+     print_list_pointer(right);
 
      TEST("Left list head is Vasco da Gama",
           left != NULL && strcmp(left->data->nome, "Vasco da Gama") == 0);
      TEST("Right list head is Fluminense",
           right != NULL && strcmp(right->data->nome, "Fluminense") == 0);
-
-     print_list(left);
-     print_list(right);
 
      free_list(&left);
      free_list(&right);
@@ -360,32 +337,33 @@ void test_merge_sort_by_name()
 {
      printf("\n--- merge_sort_by_name ---\n");
      TItemList *list = NULL;
-     add_end_sing_linked(new_item_list(1, "Vasco da Gama", 26), &list);
-     add_end_sing_linked(new_item_list(2, "Palmeiras", 20), &list);
-     add_end_sing_linked(new_item_list(3, "Sao Paulo", 15), &list);
-     add_end_sing_linked(new_item_list(4, "Botafogo", 25), &list);
-     add_end_sing_linked(new_item_list(5, "Ceara", 24), &list);
-     add_end_sing_linked(new_item_list(6, "Fortaleza", 12), &list);
-     add_end_sing_linked(new_item_list(7, "Flamengo", 11), &list);
-     add_end_sing_linked(new_item_list(8, "Fluminense", 15), &list);
-     add_end_sing_linked(new_item_list(9, "Santos", 16), &list);
-     add_end_sing_linked(new_item_list(10, "Corinthians", 11), &list);
-     add_end_sing_linked(new_item_list(11, "Cruzeiro", 23), &list);
-     add_end_sing_linked(new_item_list(12, "Coritiba", 18), &list);
-     add_end_sing_linked(new_item_list(13, "Internacional", 19), &list);
+     add_end_dup_linked(new_item_list(1, "Vasco da Gama", 26), &list);
+     add_end_dup_linked(new_item_list(2, "Palmeiras", 20), &list);
+     add_end_dup_linked(new_item_list(3, "Sao Paulo", 15), &list);
+     add_end_dup_linked(new_item_list(4, "Botafogo", 25), &list);
+     add_end_dup_linked(new_item_list(5, "Ceara", 24), &list);
+     add_end_dup_linked(new_item_list(6, "Fortaleza", 12), &list);
+     add_end_dup_linked(new_item_list(7, "America-RJ", 13), &list);
+     add_end_dup_linked(new_item_list(8, "Flamengo", 11), &list);
+     add_end_dup_linked(new_item_list(9, "Fluminense", 15), &list);
+     add_end_dup_linked(new_item_list(10, "Santos", 16), &list);
+     add_end_dup_linked(new_item_list(11, "Corinthians", 11), &list);
+     add_end_dup_linked(new_item_list(12, "Cruzeiro", 23), &list);
+     add_end_dup_linked(new_item_list(13, "Coritiba", 18), &list);
+     add_end_dup_linked(new_item_list(14, "Internacional", 19), &list);
 
      merge_sort(&list, compare_name);
 
-     TEST("First item is Botafogo",
-          list != NULL && strcmp(list->data->nome, "Botafogo") == 0);
-     TEST("Second item is Ceara",
-          list->next != NULL && strcmp(list->next->data->nome, "Ceara") == 0);
-     TEST("Third item is Corinthians",
+     TEST("First item is America-RJ",
+          list != NULL && strcmp(list->data->nome, "America-RJ") == 0);
+     TEST("Second item is Botafogo",
+          list->next != NULL && strcmp(list->next->data->nome, "Botafogo") == 0);
+     TEST("Third item is Ceara",
           list->next->next != NULL &&
-              strcmp(list->next->next->data->nome, "Corinthians") == 0);
-     TEST("Fourth item is Coritiba",
+              strcmp(list->next->next->data->nome, "Ceara") == 0);
+     TEST("Fourth item is Corinthians",
           list->next->next->next != NULL &&
-              strcmp(list->next->next->next->data->nome, "Coritiba") == 0);
+              strcmp(list->next->next->next->data->nome, "Corinthians") == 0);
 
      print_list(list);
      free_list(&list);
@@ -527,13 +505,17 @@ void test_merge_sort_already_sorted()
 
 void test_selection_sort_by_points()
 {
-     printf("\n--- selection_sort ---\n");
+     printf("\n--- selection_sort_by_points ---\n");
      TItemList *list = NULL;
      add_end_dup_linked(new_item_list(1, "Vasco da Gama", 26), &list);
      add_end_dup_linked(new_item_list(2, "Palmeiras", 20), &list);
      add_end_dup_linked(new_item_list(3, "Sao Paulo", 15), &list);
-     add_end_dup_linked(new_item_list(4, "Botafogo", 13), &list);
+     add_end_dup_linked(new_item_list(4, "Botafogo", 14), &list);
      add_end_dup_linked(new_item_list(5, "Ceara", 25), &list);
+     add_end_dup_linked(new_item_list(6, "Fortaleza", 12), &list);
+     add_end_dup_linked(new_item_list(7, "Flamengo", 11), &list);
+     add_end_dup_linked(new_item_list(8, "Fluminense", 13), &list);
+
 
      selection_sort(list, compare_points);
 
@@ -681,26 +663,54 @@ void test_selection_sort_by_name()
      free_list(&list);
 }
 
+void test_free_list()
+{
+     printf("\n--- free_list ---\n");
+
+     // caso 1: lista com vários elementos
+     TItemList *list = NULL;
+     add_end_sing_linked(new_item_list(1, "Vasco da Gama", 10), &list);
+     add_end_sing_linked(new_item_list(2, "Palmeiras", 20), &list);
+     add_end_sing_linked(new_item_list(3, "Sao Paulo", 15), &list);
+     free_list(&list);
+     TEST("list with 3 elements freed without crash", 1); // if reached here, no crash
+     print_list(list);
+
+     // caso 2: lista com um elemento
+     TItemList *list2 = NULL;
+     add_end_sing_linked(new_item_list(1, "Vasco da Gama", 10), &list2);
+     free_list(&list2);
+     TEST("list with 1 element freed without crash", 1);
+
+     // caso 3: lista vazia (NULL)
+     TItemList *list3 = NULL;
+     free_list(&list3);
+     TEST("NULL list does not cause crash", 1);
+}
+
 int main()
 {
      printf("\n=============================\n");
      printf("TESTES - list.c");
      printf("\n=============================\n");
 
-     //   test_new_item();
-     //   test_add_end_sing_linked();
-     //   test_add_end_dup_linked();
-     //   test_add_start_sing_linked();
-     //   test_add_start_dup_linked();
-     //   test_add_sorted_sing_linked();
-     //   test_find_item();
-     //   test_find_by_name();
-     //   test_swap_item();
-     //   test_split_list();
-     //   test_remove_item_sing_linked_meio_lista();
-     //   test_remove_item_sing_linked_primeiro_elemento();
-     //   test_remove_item_sing_linked_ultimo_elemento();
-     //   test_free_list();
+     // test_new_item();
+
+     // test_add_end_sing_linked();
+     // test_add_end_dup_linked();
+     // test_add_start_sing_linked();
+     // test_add_start_dup_linked();
+     // test_add_sorted_sing_linked();
+
+     // test_find_item();
+     // test_find_by_name();
+
+     // test_swap_item();
+     // test_split_list();
+
+     // test_remove_item_sing_linked_meio_lista();
+     // test_remove_item_sing_linked_primeiro_elemento();
+     // test_remove_item_sing_linked_ultimo_elemento();
 
      test_selection_sort_by_points();
      test_selection_sort_empty_list();
@@ -717,6 +727,8 @@ int main()
      test_merge_sort_two_elements();
      test_merge_sort_identical_elements();
      test_merge_sort_already_sorted();
+
+     // test_free_list();
 
      printf("\n=============================\n");
      printf("FIM DOS TESTES - list.c");

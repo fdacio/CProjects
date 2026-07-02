@@ -10,19 +10,22 @@
  * @param new_item Ponteiro para o item a ser adicionado
  * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
  */
-void add_end_sing_linked(TItemList *new_item, TItemList **list) {
-  // se a lista estiver vazia, adiciona o primeiro e sai
-  if (!*list) {
-    *list = new_item;
-    return;
-  }
-  // se a lista não estiver vazia, percorre até o último
-  TItemList *item = *list;
-  while (item->next) {
-    item = item->next;
-  }
-  // nesse ponto, o ponteiro next do último item da lista aponta para o novo item
-  item->next = new_item;
+void add_end_sing_linked(TItemList *new_item, TItemList **list)
+{
+	// se a lista estiver vazia, adiciona o primeiro e sai
+	if (!*list)
+	{
+		*list = new_item;
+		return;
+	}
+	// se a lista não estiver vazia, percorre até o último
+	TItemList *item = *list;
+	while (item->next)
+	{
+		item = item->next;
+	}
+	// nesse ponto, o ponteiro next do último item da lista aponta para o novo item
+	item->next = new_item;
 }
 
 /**
@@ -30,22 +33,25 @@ void add_end_sing_linked(TItemList *new_item, TItemList **list) {
  * @param new_item Ponteiro para o item a ser adicionado
  * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
  */
-void add_end_dup_linked(TItemList *new_item, TItemList **list) {
-  // se a lista estiver vazia, adiciona o primeiro e sai
-  if (!*list) {
-    *list = new_item;
-    return;
-  }
-  // se a lista não estiver vazia, percorre até o último
-  TItemList *item = *list;
-  while (item->next) {
-    item = item->next;
-  }
+void add_end_dup_linked(TItemList *new_item, TItemList **list)
+{
+	// se a lista estiver vazia, adiciona o primeiro e sai
+	if (!*list)
+	{
+		*list = new_item;
+		return;
+	}
+	// se a lista não estiver vazia, percorre até o último
+	TItemList *item = *list;
+	while (item->next)
+	{
+		item = item->next;
+	}
 
-  // nesse ponto, o ponteiro anterior do novo item aponto para o ultimo item da lista
-  new_item->prev = item;
-  // nesse ponto, o ultimo elemento da lista aponta para o novo elemento
-  item->next = new_item;
+	// nesse ponto, o ponteiro anterior do novo item aponto para o ultimo item da lista
+	new_item->prev = item;
+	// nesse ponto, o ultimo elemento da lista aponta para o novo elemento
+	item->next = new_item;
 }
 
 /**
@@ -53,15 +59,17 @@ void add_end_dup_linked(TItemList *new_item, TItemList **list) {
  * @param new_item Ponteiro para o item a ser adicionado
  * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
  */
-void add_start_sing_linked(TItemList *new_item, TItemList **list) {
-  if (!*list) { // if the list is empty, add the first item and return
-    *list = new_item;
-    return;
-  }
-  // if the list is not empty, add the new item at the beginning
-  new_item->next = *list;
-  // update the list pointer to point to the new item
-  *list = new_item;
+void add_start_sing_linked(TItemList *new_item, TItemList **list)
+{
+	if (!*list)
+	{ // if the list is empty, add the first item and return
+		*list = new_item;
+		return;
+	}
+	// if the list is not empty, add the new item at the beginning
+	new_item->next = *list;
+	// update the list pointer to point to the new item
+	*list = new_item;
 }
 
 /**
@@ -69,16 +77,18 @@ void add_start_sing_linked(TItemList *new_item, TItemList **list) {
  * @param new_item Ponteiro para o item a ser adicionado
  * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
  */
-void add_start_dup_linked(TItemList *new_item, TItemList **list) {
-  if (!*list) { // if the list is empty, add the first item and return
-    *list = new_item;
-    return;
-  }
-  // if the list is not empty, add the new item at the beginning
-  new_item->next = *list;
-  (*list)->prev = new_item; // update the previous pointer of the old first item
-  // update the list pointer to point to the new item
-  *list = new_item;
+void add_start_dup_linked(TItemList *new_item, TItemList **list)
+{
+	if (!*list)
+	{ // if the list is empty, add the first item and return
+		*list = new_item;
+		return;
+	}
+	// if the list is not empty, add the new item at the beginning
+	new_item->next = *list;
+	(*list)->prev = new_item; // update the previous pointer of the old first item
+	// update the list pointer to point to the new item
+	*list = new_item;
 }
 
 /**
@@ -86,22 +96,27 @@ void add_start_dup_linked(TItemList *new_item, TItemList **list) {
  * @param new_item Ponteiro para o item a ser adicionado
  * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
  */
-void add_sorted_sing_linked(TItemList *new_item, TItemList **list) {
-  TItemList *p = *list;
-  TItemList *old = NULL;
+void add_sorted_sing_linked(TItemList *new_item, TItemList **list)
+{
+	TItemList *p = *list;
+	TItemList *old = NULL;
 
-  while (p && new_item->data->pontos <= p->data->pontos) {
-    old = p;
-    p = p->next;
-  }
+	while (p && new_item->data->pontos <= p->data->pontos)
+	{
+		old = p;
+		p = p->next;
+	}
 
-  if (old == NULL) {
-    new_item->next = *list;
-    *list = new_item;
-  } else {
-    new_item->next = p;
-    old->next = new_item;
-  }
+	if (old == NULL)
+	{
+		new_item->next = *list;
+		*list = new_item;
+	}
+	else
+	{
+		new_item->next = p;
+		old->next = new_item;
+	}
 }
 
 /**
@@ -110,22 +125,23 @@ void add_sorted_sing_linked(TItemList *new_item, TItemList **list) {
  * @param _item1 Ponteiro para o item a ser trocado por _item2
  * @param _item2 Ponteiro para o item a ser trocado por _item1
  */
-void swap_item(TItemList *_item1, TItemList *_item2) {
-  // Salva ponteiros originais
-  TItemList *item1_next = _item1->next;
-  TItemList *item1_prev = _item1->prev;
-  TItemList *item2_next = _item2->next;
-  TItemList *item2_prev = _item2->prev;
+void swap_item(TItemList *_item1, TItemList *_item2)
+{
+	// Salva ponteiros originais
+	TItemList *item1_next = _item1->next;
+	TItemList *item1_prev = _item1->prev;
+	TItemList *item2_next = _item2->next;
+	TItemList *item2_prev = _item2->prev;
 
-  TItemList temp = *_item1;
-  *_item1 = *_item2;
-  *_item2 = temp;
+	TItemList temp = *_item1;
+	*_item1 = *_item2;
+	*_item2 = temp;
 
-  // Restaura os ponteiros — posição na lista não muda, só os dados
-  _item1->next = item1_next;
-  _item1->prev = item1_prev;
-  _item2->next = item2_next;
-  _item2->prev = item2_prev;
+	// Restaura os ponteiros — posição na lista não muda, só os dados
+	_item1->next = item1_next;
+	_item1->prev = item1_prev;
+	_item2->next = item2_next;
+	_item2->prev = item2_prev;
 }
 
 /**
@@ -135,25 +151,31 @@ void swap_item(TItemList *_item1, TItemList *_item2) {
  * @param list Ponteiro para a lista de clubes a ser ordenada.
  * @param compare Função de comparação para determinar a ordem dos elementos.
  */
-void selection_sort(TItemList *list, int (*compare)(TClub *, TClub *)) {
-  if (!list) {
-    return;
-  }
-  TItemList *current = list;
-  while (current) {
-    TItemList *max_current = current;
-    TItemList *next = current->next;
-    while (next) {
-      if (compare(next->data, max_current->data) < 0) {
-        max_current = next;
-      }
-      next = next->next;
-    }
-    if (max_current != current) {
-      swap_item(current, max_current);
-    }
-    current = current->next;
-  }
+void selection_sort(TItemList *list, int (*compare)(TClub *, TClub *))
+{
+	if (!list)
+	{
+		return;
+	}
+	TItemList *current = list;
+	while (current)
+	{
+		TItemList *max_current = current;
+		TItemList *next = current->next;
+		while (next)
+		{
+			if (compare(next->data, max_current->data) < 0)
+			{
+				max_current = next;
+			}
+			next = next->next;
+		}
+		if (max_current != current)
+		{
+			swap_item(current, max_current);
+		}
+		current = current->next;
+	}
 }
 
 /**
@@ -163,35 +185,41 @@ void selection_sort(TItemList *list, int (*compare)(TClub *, TClub *)) {
  * @param list Ponteiro para a lista de clubes a ser ordenada.
  * @param compare Função de comparação para determinar a ordem dos elementos.
  */
-void bubble_sort(TItemList *list, int (*compare)(TClub *, TClub *)) {
-  if (!list) {
-    return;
-  }
-  
-  TItemList *current = list;
-  int swapped;
-  
-  // Loop externo: percorre toda a lista
-  while (current) {
-    swapped = 0;
-    TItemList *next = list;
-    
-    // Loop interno: compara e troca elementos adjacentes
-    while (next && next->next) {
-      // Se o elemento atual é maior que o próximo, troca
-      if (compare(next->data, next->next->data) > 0) {
-        swap_item(next, next->next);
-        swapped = 1;
-      }
-      next = next->next;
-    }
-    
-    // Se não houve trocas, lista já está ordenada
-    if (!swapped) {
-      break;
-    }
-    current = current->next;
-  }
+void bubble_sort(TItemList *list, int (*compare)(TClub *, TClub *))
+{
+	if (!list)
+	{
+		return;
+	}
+
+	TItemList *current = list;
+	int swapped;
+
+	// Loop externo: percorre toda a lista
+	while (current)
+	{
+		swapped = 0;
+		TItemList *next = list;
+
+		// Loop interno: compara e troca elementos adjacentes
+		while (next && next->next)
+		{
+			// Se o elemento atual é maior que o próximo, troca
+			if (compare(next->data, next->next->data) > 0)
+			{
+				swap_item(next, next->next);
+				swapped = 1;
+			}
+			next = next->next;
+		}
+
+		// Se não houve trocas, lista já está ordenada
+		if (!swapped)
+		{
+			break;
+		}
+		current = current->next;
+	}
 }
 
 /**
@@ -200,22 +228,24 @@ void bubble_sort(TItemList *list, int (*compare)(TClub *, TClub *)) {
  * @param list Ponteiro para a lista.
  * @return Ponteiro para o item na posição especificada ou NULL se não encontrado.
  */
-TItemList *find_item_by_index(const int idx, TItemList *list) {
-  TItemList *item = list;
-  for (int i = 0; i < idx; i++) {
-    item = item->next;
-  }
-  return item;
+TItemList *find_item_by_index(const int idx, TItemList *list)
+{
+	TItemList *item = list;
+	for (int i = 0; i < idx; i++)
+	{
+		item = item->next;
+	}
+	return item;
 }
 
 int compare_name(TClub *a, TClub *b)
 {
-     return strcmp(a->nome, b->nome);
+	return strcmp(a->nome, b->nome);
 }
 
 int compare_points(TClub *a, TClub *b)
 {
-     return b->pontos - a->pontos;
+	return b->pontos - a->pontos;
 }
 
 /**
@@ -227,69 +257,85 @@ int compare_points(TClub *a, TClub *b)
  * @param high Índice do último elemento da sublista a ser ordenada.
  * @param compare Função de comparação para determinar a ordem dos elementos.
  */
-void quick_sort(TItemList *list, int low, int high, int (*compare)(TClub *, TClub *)) {
+void quick_sort(TItemList *list, int low, int high, int (*compare)(TClub *, TClub *))
+{
 
-  register int i, j;
-  TItemList *pivot, *i_pivot, *j_pivot;
+	register int i, j;
+	TItemList *pivot, *i_pivot, *j_pivot;
 
-  i = low;
-  j = high;
-  pivot = find_item_by_index((low+high)/2, list);
-  i_pivot = find_item_by_index(i, list);
-  j_pivot = find_item_by_index(j, list);
+	i = low;
+	j = high;
+	pivot = find_item_by_index((low + high) / 2, list);
+	i_pivot = find_item_by_index(i, list);
+	j_pivot = find_item_by_index(j, list);
 
-  do {
-    while (compare(i_pivot->data, pivot->data) < 0 && (i < high)) {
-      i++;
-      i_pivot = find_item_by_index(i, list);
-    }
-    while (compare(j_pivot->data, pivot->data) > 0 && (j > low)) {
-      j--;
-      j_pivot = find_item_by_index(j, list);
-    }
-    if (i <= j) {
-      swap_item(i_pivot, j_pivot);
-      i++;
-      j--;
-    }
-  } while (i <= j);
-  
-  if (low < j) {
-    quick_sort(list, low, j, compare);
-  }
+	do
+	{
+		while (compare(i_pivot->data, pivot->data) < 0 && (i < high))
+		{
+			i++;
+			i_pivot = find_item_by_index(i, list);
+		}
+		while (compare(j_pivot->data, pivot->data) > 0 && (j > low))
+		{
+			j--;
+			j_pivot = find_item_by_index(j, list);
+		}
+		if (i <= j)
+		{
+			swap_item(i_pivot, j_pivot);
+			i++;
+			j--;
+		}
+	} while (i <= j);
 
-  if (i < high) {
-    quick_sort(list, i, high, compare);
-  }
+	if (low < j)
+	{
+		quick_sort(list, low, j, compare);
+	}
 
+	if (i < high)
+	{
+		quick_sort(list, i, high, compare);
+	}
 }
 
 /**
  * Função auxiliar para dividir a lista em duas metades.
+ * A função utiliza o método de ponteiros lentos e rápidos para encontrar o ponto médio da lista.
+ * Ao encontrar o ponto médio, o ponteiro next do item anterior ao ponto médio é definido como NULL, efetivamente dividindo a lista em duas sublistas.
+ * A lista é dividida em duas sublistas: a primeira metade (left) e a segunda metade (right).
  * @param source Ponteiro para a lista a ser dividida.
- * @param left Ponteiro para o ponteiro da lista esquerda (passagem por referência (**)).
- * @param right Ponteiro para o ponteiro da lista direita (passagem por referência (**
+ * @param left Ponteiro para o ponteiro da lista esquerda (passagem por referência (**))
+ * @param right Ponteiro para o ponteiro da lista direita (passagem por referência (**))
  */
-void split_list(TItemList *source, TItemList **left, TItemList **right) {
-  
-  if (!source || !left || !right) {
-    return;
-  }
+void split_list(TItemList *source, TItemList **left, TItemList **right)
+{
 
-  TItemList *slow = source;
-  TItemList *fast = source->next;
+	// Se a lista for nula, não há nada a dividir
+	// Se o ponteiro para ponteiro da lista esquerda ou direita for nulo, não há onde armazenar as sublistas
+	if (!source || !left || !right)
+	{
+		return;
+	}
 
-  while (fast) {
-    fast = fast->next;
-    if (fast) {
-      slow = slow->next;
-      fast = fast->next;
-    }
-  }
+	TItemList *slow = source;
+	TItemList *fast = source->next;
 
-  *left = source;
-  *right = slow->next;
-  slow->next = NULL; // Split the list into two halves
+	while (fast)
+	{
+		fast = fast->next;
+		if (fast)
+		{
+			slow = slow->next;
+			fast = fast->next;
+		}
+	}
+
+	*left = source;
+	*right = slow->next;
+	slow->next->prev = NULL; // If the list is doubly linked, set the previous pointer of the right list to NULL
+	slow->next = NULL;		 // Split the list into two halves
 }
 
 /**
@@ -299,21 +345,27 @@ void split_list(TItemList *source, TItemList **left, TItemList **right) {
  * @param compare Função de comparação para determinar a ordem dos elementos.
  * @return Ponteiro para a lista mesclada e ordenada.
  */
-TItemList *merge_lists(TItemList *left, TItemList *right, int (*compare)(TClub *, TClub *)) {
-  if (!left) return right;
-  if (!right) return left;
+TItemList *merge_lists(TItemList *left, TItemList *right, int (*compare)(TClub *, TClub *))
+{
+	if (!left)
+		return right;
+	if (!right)
+		return left;
 
-  TItemList *result = NULL;
+	TItemList *result = NULL;
 
-  if (compare(left->data, right->data) <= 0) {
-    result = left;
-    result->next = merge_lists(left->next, right, compare);
-  } else {
-    result = right;
-    result->next = merge_lists(left, right->next, compare);
-  }
+	if (compare(left->data, right->data) <= 0)
+	{
+		result = left;
+		result->next = merge_lists(left->next, right, compare);
+	}
+	else
+	{
+		result = right;
+		result->next = merge_lists(left, right->next, compare);
+	}
 
-  return result;
+	return result;
 }
 
 /**
@@ -322,21 +374,23 @@ TItemList *merge_lists(TItemList *left, TItemList *right, int (*compare)(TClub *
  * @param list Ponteiro para o ponteiro da lista de clubes a ser ordenada (passagem por referência (**) para refletir modificação na variável global da lista)
  * @param compare Função de comparação para determinar a ordem dos elementos.
  */
-void merge_sort(TItemList **list, int (*compare)(TClub *, TClub *)) {
-  TItemList *head = *list;
-  TItemList *left = NULL;
-  TItemList *right = NULL;
+void merge_sort(TItemList **list, int (*compare)(TClub *, TClub *))
+{
+	TItemList *head = *list;
+	TItemList *left = NULL;
+	TItemList *right = NULL;
 
-  if(!head || !head->next) {
-    return; // Base case: 0 or 1 element
-  }
+	if (!head || !head->next)
+	{
+		return; // Base case: 0 or 1 element
+	}
 
-  split_list(head, &left, &right);
+	split_list(head, &left, &right);
 
-  merge_sort(&left, compare);
-  merge_sort(&right, compare);
+	merge_sort(&left, compare);
+	merge_sort(&right, compare);
 
-  *list = merge_lists(left, right, compare); // Update the original list pointer
+	*list = merge_lists(left, right, compare); // Update the original list pointer
 }
 
 /**
@@ -345,15 +399,18 @@ void merge_sort(TItemList **list, int (*compare)(TClub *, TClub *)) {
  * @param list Ponteiro para a lista de clubes.
  * @return Ponteiro para o item encontrado ou NULL se não encontrado.
  */
-TItemList *find_item(const int id, TItemList *list) {
-  TItemList *aux = list;
-  while (aux) {
-    if (aux->data->id == id) {
-      return aux;
-    }
-    aux = aux->next;
-  }
-  return NULL;
+TItemList *find_item(const int id, TItemList *list)
+{
+	TItemList *aux = list;
+	while (aux)
+	{
+		if (aux->data->id == id)
+		{
+			return aux;
+		}
+		aux = aux->next;
+	}
+	return NULL;
 }
 
 /**
@@ -362,15 +419,18 @@ TItemList *find_item(const int id, TItemList *list) {
  * @param list Ponteiro para a lista de clubes.
  * @return Ponteiro para o item encontrado ou NULL se não encontrado.
  */
-TItemList *find_item_by_name(const char *nome, TItemList *list) {
-  TItemList *aux = list;
-  while (aux) {
-    if (strcmp(aux->data->nome, nome) == 0) {
-      return aux;
-    }
-    aux = aux->next;
-  }
-  return NULL;
+TItemList *find_item_by_name(const char *nome, TItemList *list)
+{
+	TItemList *aux = list;
+	while (aux)
+	{
+		if (strcmp(aux->data->nome, nome) == 0)
+		{
+			return aux;
+		}
+		aux = aux->next;
+	}
+	return NULL;
 }
 
 /**
@@ -378,113 +438,124 @@ TItemList *find_item_by_name(const char *nome, TItemList *list) {
  * @param id ID do item a ser removido.
  * @param list Ponteiro para o ponteiro da lista (passagem por referência (**))
  */
-void remove_item_sing_linked(int id, TItemList **list) {
-  
-  if (!*list)
-    return;
+void remove_item_sing_linked(int id, TItemList **list)
+{
 
-  TItemList *_current = *list;
-  TItemList *_prev = NULL;
-  while (_current) {
-    if (_current->data->id == id) {
-      // Nesse ponto o item a ser removido para a ser o _current
-      //  verifica se o item  é o primeiro da lista;
-      //_prev ainda não aponta para nenhum item
-      if (_prev == NULL) {
-        // o primeiro item da lista passa o próximo do item item a ser removido
-        *list = _current->next;
-      } else {
-        // nesse ponto o _prev já aponta para o item anterior do item a ser
-        // removido então o proximo do item anteriar ao do ser removido,
-        // apontará para do item a ser removido
-        _prev->next = _current->next;
-      }
-      // libera a memoria do item a ser removido
-      free(_current);
-      return;
-    }
-    // Se o item atual(_current) não for o que está procurando, ele será o
-    // anterior ao item procurado
-    _prev = _current;
-    _current = _current->next;
-  }
+	if (!*list)
+		return;
+
+	TItemList *_current = *list;
+	TItemList *_prev = NULL;
+	while (_current)
+	{
+		if (_current->data->id == id)
+		{
+			// Nesse ponto o item a ser removido para a ser o _current
+			//  verifica se o item  é o primeiro da lista;
+			//_prev ainda não aponta para nenhum item
+			if (_prev == NULL)
+			{
+				// o primeiro item da lista passa o próximo do item item a ser removido
+				*list = _current->next;
+			}
+			else
+			{
+				// nesse ponto o _prev já aponta para o item anterior do item a ser
+				// removido então o proximo do item anteriar ao do ser removido,
+				// apontará para do item a ser removido
+				_prev->next = _current->next;
+			}
+			// libera a memoria do item a ser removido
+			free(_current);
+			return;
+		}
+		// Se o item atual(_current) não for o que está procurando, ele será o
+		// anterior ao item procurado
+		_prev = _current;
+		_current = _current->next;
+	}
 }
 
 /**
  * Função para remover um item de uma lista duplamente ligada.
  * @param _remove Ponteiro para o item a ser removido.
- * @param list Ponteiro para o ponteiro da lista (passagem por referência (**)  
+ * @param list Ponteiro para o ponteiro da lista (passagem por referência (**)
  */
-void remove_item_dup_linked(TItemList *_remove, TItemList **list) {
+void remove_item_dup_linked(TItemList *_remove, TItemList **list)
+{
 
-  if (!*list)
-    return;
+	if (!*list)
+		return;
 
-  if (!_remove)
-    return;
+	if (!_remove)
+		return;
 
-  TItemList *_prev = _remove->prev;
-  TItemList *_next = _remove->next;
+	TItemList *_prev = _remove->prev;
+	TItemList *_next = _remove->next;
 
-  // Verfica se o item a removido é o primeiro
-  if (_prev == NULL) {
-    // Lista aponta para o próximo item do item a ser removido,
-    // ou seja, aponta para o novo primerio item da lista
-    *list = _next;
-    // Verfica se item a ser removido tem um próximo,
-    // ou seja, se ele é o primeiro e não é o único.
-    // O próximo o item a ser removido passa a ser o primeiro,
-    // então o anterior (prev) passar a apontar para NULL
-    if (_next)
-      _next->prev = NULL;
-    free(_remove);
-    return;
-  }
+	// Verfica se o item a removido é o primeiro
+	if (_prev == NULL)
+	{
+		// Lista aponta para o próximo item do item a ser removido,
+		// ou seja, aponta para o novo primerio item da lista
+		*list = _next;
+		// Verfica se item a ser removido tem um próximo,
+		// ou seja, se ele é o primeiro e não é o único.
+		// O próximo o item a ser removido passa a ser o primeiro,
+		// então o anterior (prev) passar a apontar para NULL
+		if (_next)
+			_next->prev = NULL;
+		free(_remove);
+		return;
+	}
 
-  // Aqui o item a ser removido é qualquer item que não é o primeiro,
-  // ou seja, do segundo em diante
+	// Aqui o item a ser removido é qualquer item que não é o primeiro,
+	// ou seja, do segundo em diante
 
-  // Verifica se o item a ser removido tem um anterior,
-  // ou seja, o item a ser removido não é o primeiro
-  if (_prev)
-    _prev->next =
-        _next; // Nessa atribuilção, se o item a ser removido é o ultimo, _next
-               // é NULL e o item anterior passa a ser o último
+	// Verifica se o item a ser removido tem um anterior,
+	// ou seja, o item a ser removido não é o primeiro
+	if (_prev)
+		_prev->next =
+			_next; // Nessa atribuilção, se o item a ser removido é o ultimo, _next
+				   // é NULL e o item anterior passa a ser o último
 
-  // Verifica se o item a ser removido tem um próximo,
-  // ou seja, ele não é o ultimo
-  if (_next)
-    _next->prev = _prev;
+	// Verifica se o item a ser removido tem um próximo,
+	// ou seja, ele não é o ultimo
+	if (_next)
+		_next->prev = _prev;
 
-  // Libera a memória do item removido
-  free(_remove);
+	// Libera a memória do item removido
+	free(_remove);
 }
 
 /**
  * Função para liberar a memória alocada para uma lista de clubes.
  * @param list Ponteiro para o ponteiro da lista (passagem por referência (**) para refletir modificação na variável global da lista)
  */
-void free_list(TItemList **list) {
-  if (!list)
-    return;
-  TItemList *aux = *list;
-  TItemList *_free = NULL;
-  while (aux) {
-    _free = aux;
-    aux = aux->next;
-    free(_free->data); // libera a memória do clube
-    free(_free);
-  }
-  *list = NULL; // opcional: define a lista como NULL após liberar
+void free_list(TItemList **list)
+{
+	if (!list)
+		return;
+	TItemList *aux = *list;
+	TItemList *_free = NULL;
+	while (aux)
+	{
+		_free = aux;
+		aux = aux->next;
+		free(_free->data); // libera a memória do clube
+		free(_free);
+	}
+	*list = NULL; // opcional: define a lista como NULL após liberar
 }
 
 /**
  * Função para gerar o próximo ID de clube.
  * @return O próximo ID de clube.
  */
-int get_next_id() { 
-  static int id = 0;
-  return ++id; 
+int get_next_id()
+{
+	static int id = 0;
+	return ++id;
 }
 
 /**
@@ -492,33 +563,35 @@ int get_next_id() {
  * @param _id ID do clube.
  * @param nome Nome do clube.
  * @param pontos Pontos do clube.
- * @return Ponteiro para o novo item de lista.  
+ * @return Ponteiro para o novo item de lista.
  */
-TItemList *new_item_list(int _id, const char *nome, int pontos) {
-  
-  TItemList *new_item = (TItemList *)malloc(sizeof(TItemList));
-  TClub *new_club = (TClub *)malloc(sizeof(TClub));
+TItemList *new_item_list(int _id, const char *nome, int pontos)
+{
 
-  if (!new_club) {
-    perror("malloc failed");
-    return NULL; 
-  } 
-  
-  if (!new_item) {
-    perror("malloc failed");
-    return NULL;
-  }
+	TItemList *new_item = (TItemList *)malloc(sizeof(TItemList));
+	TClub *new_club = (TClub *)malloc(sizeof(TClub));
 
-  new_club->id = _id;
-  strncpy(new_club->nome, nome, sizeof(new_club->nome) - 1);
-  new_club->nome[sizeof(new_club->nome) - 1] = '\0';
-  new_club->pontos = pontos;
+	if (!new_club)
+	{
+		perror("malloc failed");
+		return NULL;
+	}
 
-  new_item->data = new_club;
-  new_item->next = NULL;
-  new_item->prev = NULL;
-  return new_item;
+	if (!new_item)
+	{
+		perror("malloc failed");
+		return NULL;
+	}
 
+	new_club->id = _id;
+	strncpy(new_club->nome, nome, sizeof(new_club->nome) - 1);
+	new_club->nome[sizeof(new_club->nome) - 1] = '\0';
+	new_club->pontos = pontos;
+
+	new_item->data = new_club;
+	new_item->next = NULL;
+	new_item->prev = NULL;
+	return new_item;
 }
 
 /**
@@ -526,23 +599,26 @@ TItemList *new_item_list(int _id, const char *nome, int pontos) {
  * @param list Ponteiro para a lista.
  * @return Ponteiro para o novo descritor de lista.
  */
-TDescriptorList *create_descriptor_list(TItemList *list) {
-  TDescriptorList *descriptor = (TDescriptorList *)malloc(sizeof(TDescriptorList));
-  if (!descriptor) {
-    perror("malloc failed");
-    return NULL;
-  }
+TDescriptorList *create_descriptor_list(TItemList *list)
+{
+	TDescriptorList *descriptor = (TDescriptorList *)malloc(sizeof(TDescriptorList));
+	if (!descriptor)
+	{
+		perror("malloc failed");
+		return NULL;
+	}
 
-  descriptor->first = list;
-  descriptor->last = NULL;
-  descriptor->size = 0;
+	descriptor->first = list;
+	descriptor->last = NULL;
+	descriptor->size = 0;
 
-  TItemList *current = list;
-  while (current) {
-    descriptor->last = current; // Atualiza o último item
-    descriptor->size++;         // Incrementa o tamanho
-    current = current->next;
-  }
+	TItemList *current = list;
+	while (current)
+	{
+		descriptor->last = current; // Atualiza o último item
+		descriptor->size++;			// Incrementa o tamanho
+		current = current->next;
+	}
 
-  return descriptor;
+	return descriptor;
 }
